@@ -8,20 +8,17 @@ import {
   html,
   css,
   react,
-  csharp,
   redux,
   flutter2,
   android2,
   firebase,
   tailwind,
   sql,
-  java,
-  cpp,
   node,
   git,
   rubyrails,
-  komikult,
-  leaderboard,
+  portfolio,
+  bagsociety,
   math,
   movie,
   nyeusi,
@@ -65,18 +62,6 @@ const services = [
 
 const technologies = [
   {
-    name: 'android2',
-    icon: android2,
-  },
-  {
-    name: 'flutter2',
-    icon: flutter2,
-  },
-  {
-    name: 'firebase',
-    icon: firebase,
-  },
-  {
     name: 'HTML 5',
     icon: html,
   },
@@ -105,20 +90,20 @@ const technologies = [
     icon: node,
   },
   {
-    name: 'Cpp',
-    icon: cpp,
+    name: 'android',
+    icon: android2,
   },
   {
-    name: 'Java',
-    icon: java,
+    name: 'flutter',
+    icon: flutter2,
+  },
+  {
+    name: 'firebase',
+    icon: firebase,
   },
   {
     name: 'SQL',
     icon: sql,
-  },
-  {
-    name: 'C#',
-    icon: csharp,
   },
   {
     name: 'Rails',
@@ -168,8 +153,8 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: komikult,
-    repo: 'https://github.com/shaqdeff/KomiKult',
+    image: portfolio,
+    repo: 'https://github.com/Umair-Habibx123/Personal-Portfolio',
     demo: 'https://umairhabib.vercel.app/',
   },
   {
@@ -190,8 +175,8 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: leaderboard,
-    repo: 'https://github.com/shaqdeff/Leaderboard',
+    image: bagsociety,
+    repo: 'https://github.com/Umair-Habibx123/BagSociety_React',
     demo: 'https://bagsociety.vercel.app/',
   },
   {
@@ -213,8 +198,8 @@ const projects = [
       },
     ],
     image: math,
-    repo: 'https://github.com/shaqdeff/Math-Magicians',
-    demo: 'https://inspiring-medovik-37d3b3.netlify.app/',
+    repo: '',
+    demo: '',
   },
   {
     id: 'project-4',
@@ -231,8 +216,8 @@ const projects = [
       },
     ],
     image: movie,
-    repo: 'https://github.com/shaqdeff/Movie-Metro',
-    demo: 'https://movie-metro.netlify.app/',
+    repo: '',
+    demo: '',
   },
   {
     id: 'project-5',
@@ -253,8 +238,8 @@ const projects = [
       },
     ],
     image: nyeusi,
-    repo: 'https://github.com/shaqdeff/Nyeusi-Fest-Site',
-    demo: 'https://shaqdeff.github.io/Nyeusi-Fest-Site/',
+    repo: '',
+    demo: '',
   },
 ];
 

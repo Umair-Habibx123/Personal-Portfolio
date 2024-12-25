@@ -35,17 +35,14 @@ import dotnet from './tech/dotnet.png';
 import rubyrails from './tech/rubyrails.png';
 import flutter2 from './tech/flutter.png';
 import android2 from './tech/android.png';
-import csharp from './tech/csharp.png';
 import sql from './tech/sql.png';
-import java from './tech/java.png';
-import cpp from './tech/cpp.png';
 import firebase from './tech/firebase.png';
 
 import eziline from './company/eziline.png';
 import numl from './company/numl.png';
 
-import komikult from './projects/komikult.png';
-import leaderboard from './projects/leaderboard.png';
+import portfolio from './projects/portfolio.png';
+import bagsociety from './projects/bagsociety.png';
 import math from './projects/math-magicians.png';
 import movie from './projects/movie-metro.png';
 import nyeusi from './projects/nyeusi.png';
@@ -77,12 +74,9 @@ export {
   git,
   html,
   sql,
-  java,
-  cpp,
   javascript,
   node,
   dotnet,
-  csharp,
   firebase,
   flutter2,
   android2,
@@ -90,8 +84,8 @@ export {
   react,
   redux,
   tailwind,
-  komikult,
-  leaderboard,
+  portfolio,
+  bagsociety,
   math,
   movie,
   nyeusi,

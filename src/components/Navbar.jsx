@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
@@ -23,13 +23,10 @@ const Navbar = () => {
           }}
         >
           <img
-            src={logo} // your logo comes here
+            src={logo}
             alt="logo"
             className="sm:w-[50px] sm:h-[50px] w-[45px] h-[45px] object-contain"
           />
-
-          {/* if you have text you want besides your logo it comes here.
-          Otherwise delete this if you don't need it. */}
           <img
             src={logotext}
             alt="logo"
@@ -58,9 +55,7 @@ const Navbar = () => {
           {toggle ? (
             <div
               className={`p-6 bg-flashWhite opacity-[0.98] absolute 
-                top-0 left-0 w-screen h-[100vh] z-10 menu ${
-                  toggle ? "menu-open" : "menu-close"
-                }`}
+                top-0 left-0 w-screen h-[100vh] z-10 menu ${toggle ? "menu-open" : "menu-close"}`}
             >
               <div className="flex justify-end">
                 <img
@@ -80,8 +75,8 @@ const Navbar = () => {
                     key={nav.id}
                     className={`${
                       active === nav.title ? "text-french" : "text-eerieBlack"
-                    } text-[24px] font-bold font-arenq 
-                      uppercase tracking-[1px] cursor-pointer`}
+                    } text-[18px] sm:text-[24px] font-bold font-arenq 
+                    uppercase tracking-[1px] cursor-pointer`} // Reduced mobile font size here
                     onClick={() => {
                       setToggle(!toggle);
                       setActive(nav.title);
