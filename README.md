@@ -92,7 +92,3 @@ Contributions are always welcome! If you'd like to improve this portfolio websit
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Note**: Make sure to replace placeholder values (like `your-username`, `your_service_id`, etc.) with your actual details. This README template is structured for clear communication and professional presentation of your portfolio on GitHub.
