@@ -8,6 +8,8 @@ const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
 
+  const handleCloseNavbar = () => setToggle(false);
+
   return (
     <nav
       className={`${styles.paddingX} w-full flex items-center py-2 fixed 
@@ -51,35 +53,38 @@ const Navbar = () => {
         </ul>
 
         {/* Mobile Navbar */}
-        <div className="sm:hidden flex flex-1 w-screen justify-end items-center">
+        {toggle && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-25 z-40"
+            onClick={handleCloseNavbar}
+          ></div>
+        )}
+        <div className="sm:hidden flex flex-1 justify-end items-center">
           {toggle ? (
             <div
-              className={`p-6 bg-flashWhite opacity-[0.98] absolute 
-                top-0 left-0 w-screen h-[100vh] z-10 menu ${toggle ? "menu-open" : "menu-close"}`}
+              className={`fixed top-0 right-0 w-3/4 max-w-[300px] h-[35%] bg-flashWhite 
+                shadow-lg z-50 rounded-l-lg p-6 menu transition-transform duration-300`}
             >
+              {/* Close Button */}
               <div className="flex justify-end">
                 <img
                   src={close}
                   alt="close"
                   className="w-[22px] h-[22px] object-contain cursor-pointer"
-                  onClick={() => setToggle(!toggle)}
+                  onClick={handleCloseNavbar}
                 />
               </div>
-              <ul
-                className="list-none flex flex-col gap-4 
-                items-start justify-end mt-[10rem] -ml-[35px]"
-              >
+              {/* Navbar Links */}
+              <ul className="list-none flex flex-col gap-4 mt-8">
                 {navLinks.map((nav) => (
                   <li
-                    id={nav.id}
                     key={nav.id}
                     className={`${
                       active === nav.title ? "text-french" : "text-eerieBlack"
-                    } text-[18px] sm:text-[24px] font-bold font-arenq 
-                    uppercase tracking-[1px] cursor-pointer`} // Reduced mobile font size here
+                    } text-[16px] font-medium uppercase tracking-wide hover:text-taupe transition-colors cursor-pointer`}
                     onClick={() => {
-                      setToggle(!toggle);
                       setActive(nav.title);
+                      handleCloseNavbar();
                     }}
                   >
                     <a href={`#${nav.id}`}>{nav.title}</a>
@@ -91,8 +96,8 @@ const Navbar = () => {
             <img
               src={menu}
               alt="menu"
-              className="w-[34px] h-[34px] object-contain cursor-pointer"
-              onClick={() => setToggle(!toggle)}
+              className="w-[30px] h-[30px] object-contain cursor-pointer"
+              onClick={() => setToggle(true)}
             />
           )}
         </div>

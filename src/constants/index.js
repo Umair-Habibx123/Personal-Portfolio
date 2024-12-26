@@ -3,25 +3,24 @@ import {
   backend,
   flutter,
   android,
-  javascript,
-  dotnet,
   html,
   css,
+  javascript,
   react,
-  redux,
-  flutter2,
-  android2,
-  firebase,
   tailwind,
-  sql,
   node,
-  git,
+  flutters,
+  androids,
+  firebase,
+  dotnet,
   rubyrails,
+  sql,
+  git,
   portfolio,
   bagsociety,
-  math,
-  movie,
-  nyeusi,
+  newsapp,
+  aiapp,
+  space,
   eziline,
   numl
 } from '../assets';
@@ -60,6 +59,7 @@ const services = [
   },
 ];
 
+
 const technologies = [
   {
     name: 'HTML 5',
@@ -78,10 +78,6 @@ const technologies = [
     icon: react,
   },
   {
-    name: 'Redux Toolkit',
-    icon: redux,
-  },
-  {
     name: 'Tailwind CSS',
     icon: tailwind,
   },
@@ -90,28 +86,28 @@ const technologies = [
     icon: node,
   },
   {
-    name: 'android',
-    icon: android2,
+    name: 'flutter',
+    icon: flutters,
   },
   {
-    name: 'flutter',
-    icon: flutter2,
+    name: 'android',
+    icon: androids,
   },
   {
     name: 'firebase',
     icon: firebase,
   },
   {
-    name: 'SQL',
-    icon: sql,
+    name: 'Dotnet',
+    icon: dotnet,
   },
   {
     name: 'Rails',
     icon: rubyrails,
   },
   {
-    name: 'Dotnet',
-    icon: dotnet,
+    name: 'SQL',
+    icon: sql,
   },
   {
     name: 'git',
@@ -128,7 +124,7 @@ const experiences = [
     date: 'July 2024 - October 2024',
   },
   {
-    title: 'Android App & Web Development',
+    title: 'Web Development',
     company_name: 'Academic Experience',
     icon: numl, // Add the appropriate icon variable for academic experience
     iconBg: '#333333',
@@ -197,9 +193,9 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: math,
-    repo: '',
-    demo: '',
+    image: newsapp,
+    repo: 'https://github.com/Umair-Habibx123/News-App',
+    demo: 'https://github.com/Umair-Habibx123/News-App/raw/main/APK/app-release.apk',
   },
   {
     id: 'project-4',
@@ -215,9 +211,9 @@ const projects = [
         color: 'green-text-gradient',
       },
     ],
-    image: movie,
-    repo: '',
-    demo: '',
+    image: aiapp,
+    repo: 'https://github.com/Umair-Habibx123/Gemini_AI_App',
+    demo: 'https://github.com/Umair-Habibx123/Gemini_AI_App/raw/main/APK/app-release.apk',
   },
   {
     id: 'project-5',
@@ -237,7 +233,7 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: nyeusi,
+    image: space,
     repo: '',
     demo: '',
   },

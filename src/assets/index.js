@@ -23,29 +23,27 @@ import resume from './icons/resume.png';
 import send from './icons/send.png';
 import sendHover from './icons/sendHover.png';
 
-import css from './tech/css.png';
-import git from './tech/git.png';
 import html from './tech/html.png';
+import css from './tech/css.png';
 import javascript from './tech/javascript.png';
-import node from './tech/node.png';
 import react from './tech/react.png';
-import redux from './tech/redux.png';
 import tailwind from './tech/tailwind.png';
+import node from './tech/node.png';
+import flutters from './tech/flutter.png';
+import androids from './tech/android.png';
+import firebase from './tech/firebase.png';
 import dotnet from './tech/dotnet.png';
 import rubyrails from './tech/rubyrails.png';
-import flutter2 from './tech/flutter.png';
-import android2 from './tech/android.png';
 import sql from './tech/sql.png';
-import firebase from './tech/firebase.png';
+import git from './tech/git.png';
 
 import eziline from './company/eziline.png';
 import numl from './company/numl.png';
 
 import portfolio from './projects/portfolio.png';
 import bagsociety from './projects/bagsociety.png';
-import math from './projects/math-magicians.png';
-import movie from './projects/movie-metro.png';
-import nyeusi from './projects/nyeusi.png';
+import newsapp from './projects/newsapp.png';
+import aiapp from './projects/aiapp.png';
 import space from './projects/space-hub.png';
 
 export {
@@ -70,25 +68,23 @@ export {
   resume,
   send,
   sendHover,
-  css,
-  git,
   html,
-  sql,
+  css,
   javascript,
-  node,
-  dotnet,
-  firebase,
-  flutter2,
-  android2,
-  rubyrails,
   react,
-  redux,
   tailwind,
+  node,
+  flutters,
+  androids,
+  firebase,
+  dotnet,
+  rubyrails,
+  sql,
+  git,
   portfolio,
   bagsociety,
-  math,
-  movie,
-  nyeusi,
+  newsapp,
+  aiapp,
   space,
   eziline,
   numl
