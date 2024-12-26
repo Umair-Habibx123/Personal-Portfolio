@@ -66,11 +66,11 @@ const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
 
   return (
-    <Float speed={1.5} rotationIntensity={0.8} floatIntensity={1.5}>
+    <Float speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
       <ambientLight intensity={0.2} />
       <directionalLight position={[0, 0, 0.05]} />
       <mesh castShadow receiveShadow scale={2.5}>
-        <icosahedronGeometry args={[1, 1]} /> {/* Simplified geometry */}
+        <icosahedronGeometry args={[1, 1]} /> {/* Reduced subdivisions */}
         <meshStandardMaterial
           color="#e0e0e0"
           polygonOffset
@@ -87,6 +87,7 @@ const Ball = (props) => {
     </Float>
   );
 };
+
 
 const BallCanvas = ({ icon }) => {
   return (
