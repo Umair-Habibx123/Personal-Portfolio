@@ -20,7 +20,7 @@ import {
   bagsociety,
   newsapp,
   aiapp,
-  space,
+  firestream,
   eziline,
   numl
 } from '../assets';
@@ -217,7 +217,7 @@ const projects = [
   },
   {
     id: 'project-5',
-    name: 'Real-Time Chat App',
+    name: 'FireStream Chat App',
     description: 'A real-time messaging app enabling users to connect and communicate instantly using Firebase backend services.',
     tags: [
       {
@@ -233,9 +233,9 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: space,
-    repo: '',
-    demo: '',
+    image: firestream,
+    repo: 'https://github.com/Umair-Habibx123/FireStream-Chat-App',
+    demo: 'https://github.com/Umair-Habibx123/FireStream-Chat-App/raw/main/APK/app-release.apk',
   },
 ];
 

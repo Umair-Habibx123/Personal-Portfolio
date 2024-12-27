@@ -44,7 +44,7 @@ import portfolio from './projects/portfolio.png';
 import bagsociety from './projects/bagsociety.png';
 import newsapp from './projects/newsapp.png';
 import aiapp from './projects/aiapp.png';
-import space from './projects/space-hub.png';
+import firestream from './projects/firestream.png';
 
 export {
   bwmap,
@@ -85,7 +85,7 @@ export {
   bagsociety,
   newsapp,
   aiapp,
-  space,
+  firestream,
   eziline,
   numl
 };

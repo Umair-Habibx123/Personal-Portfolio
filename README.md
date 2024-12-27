@@ -1,7 +1,3 @@
-Here's a professional README template for your personal portfolio website, tailored for GitHub:
-
----
-
 # Personal Portfolio Website
 
 Welcome to my personal portfolio website! This website showcases my skills, projects, and professional journey as a developer. It serves as a platform for sharing my work, knowledge, and experiences with potential clients and collaborators.
