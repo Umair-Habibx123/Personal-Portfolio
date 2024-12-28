@@ -1,83 +1,7 @@
-// // React component an interactive 3D visual element using the Three.js library, specifically
-// // with the @react-three/fiber and @react-three/drei packages
+// React component an interactive 3D visual element using the Three.js library, specifically
+// with the @react-three/fiber and @react-three/drei packages
 
-//  //Ball UI/Canvas
-
-// import React, { Suspense } from "react";
-// import { Canvas } from "@react-three/fiber";
-// import {
-//   Decal,
-//   Float,
-//   OrbitControls,
-//   Preload,
-//   useTexture,
-// } from "@react-three/drei";
-// import Loader from "../Loader";
-
-// const Ball = (props) => {
-//   const [decal] = useTexture([props.imgUrl]);
-
-//   return (
-//     // <Float speed={2.5} rotationIntensity={1} floatIntensity={2}>
-//     <Float speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
-//       {/* <ambientLight intensity={0.25} /> */}
-//       <ambientLight intensity={0.2} />
-//       <directionalLight position={[0, 0, 0.05]} />
-//       {/* <mesh castShadow receiveShadow scale={2.75}> */}
-//       <mesh castShadow receiveShadow scale={2.5}>
-//         <icosahedronGeometry args={[1, 2]} />
-//         {/* <icosahedronGeometry args={[1, 1]} />  */}
-//         <meshStandardMaterial
-//           color="#e0e0e0"
-//           polygonOffset
-//           // polygonOffsetFactor={-5}
-//           polygonOffsetFactor={-4}
-//           flatShading
-//         />
-//         {/* <Decal
-//           position={[0, 0, 1]}
-//           rotation={[2 * Math.PI, 0, 6.25]}
-//           flatShading
-//           map={decal}
-//         /> */}
-//         <Decal
-//           position={[0, 0, 1]}
-//           rotation={[Math.PI * 2, 0, 0]}
-//           flatShading
-//           map={decal}
-//         />
-//       </mesh>
-//     </Float>
-//   );
-// };
-
-// const BallCanvas = ({ icon }) => {
-//   return (
-//     // <Canvas frameloop="always" gl={{ preserveDrawingBuffer: true }}>
-//     <Canvas
-//       frameloop="demand" // Optimize rendering for performance
-//       gl={{ preserveDrawingBuffer: true }}
-//       style={{ width: "100%", height: "auto" }} // Responsive size
-//     >
-//       <Suspense fallback={<Loader />}>
-//         {/* <OrbitControls enableZoom={false} position0={0} /> */}
-//         <OrbitControls
-//           enableZoom={false}
-//           enablePan={false} // Disable unnecessary controls
-//           maxPolarAngle={Math.PI / 2}
-//           minPolarAngle={Math.PI / 2}
-//         />
-//         <Ball imgUrl={icon} />
-//       </Suspense>
-
-//       <Preload all />
-//     </Canvas>
-//   );
-// };
-
-// export default BallCanvas;
-
-// //Cube UI/Canvas
+//Ball UI/Canvas
 
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -88,26 +12,29 @@ import {
   Preload,
   useTexture,
 } from "@react-three/drei";
+import useIsLaptop from "../../utils/useInLaptop";
+import LowQualityBackground from "../../utils/LowQualityBackgound";
 import Loader from "../Loader";
 
-const Cube = (props) => {
+const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
 
   return (
-    <Float speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[0, 1, 1]} />
-      <mesh castShadow receiveShadow scale={2.5}>
-        <boxGeometry args={[1.5, 1.5, 1.5]} /> {/* Creates a cube */}
+    <Float speed={2.5} rotationIntensity={1} floatIntensity={2}>
+      <ambientLight intensity={0.25} />
+      <directionalLight position={[0, 0, 0.05]} />
+      <mesh castShadow receiveShadow scale={2.75}>
+        <icosahedronGeometry args={[1, 2]} />
+        {/* <sphereGeometry args={[1, 64, 64]} /> */}
         <meshStandardMaterial
-          color="#e9ecef"
+          color="#efefef"
           polygonOffset
-          polygonOffsetFactor={-2}
+          polygonOffsetFactor={-5}
           flatShading
         />
         <Decal
-          position={[0, 0, 0.75]} // Place the decal on the front face
-          rotation={[0, 0, 0]} // No rotation
+          position={[0, 0, 1]}
+          rotation={[2 * Math.PI, 0, 6.25]}
           flatShading
           map={decal}
         />
@@ -116,33 +43,37 @@ const Cube = (props) => {
   );
 };
 
-const CubeCanvas = ({ icon }) => {
-  return (
+const BallCanvas = ({ icon }) => {
+  const isLaptop = useIsLaptop();
+  return isLaptop ? (
     <Canvas
-      frameloop="demand" // Optimize rendering for performance
+      frameloop="always" // "demand" Optimize rendering for performance
       gl={{ preserveDrawingBuffer: true }}
-      style={{ width: "100%", height: "auto" }} // Responsive size
+      style={{ width: "120%", height: "auto" }} // Responsive size
+      // camera={{ position: [0, 0, 9], fov: 50 }}
     >
       <Suspense fallback={<Loader />}>
         <OrbitControls
           enableZoom={false}
-          enablePan={false} // Disable unnecessary controls
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
+          position0={0}
+          // maxPolarAngle={Math.PI / 2}
+          // minPolarAngle={Math.PI / 2}
         />
-        <Cube imgUrl={icon} />
+        <Ball imgUrl={icon} />
       </Suspense>
 
       <Preload all />
     </Canvas>
+  ) : (
+    <LowQualityBackground icon={icon} />
   );
 };
 
-export default CubeCanvas;
+export default BallCanvas;
 
-// //Cylinder UI/Canvas
+// //Cube UI/Canvas
 
-// import React, { Suspense } from "react";
+// import React from "react";
 // import { Canvas } from "@react-three/fiber";
 // import {
 //   Decal,
@@ -151,9 +82,11 @@ export default CubeCanvas;
 //   Preload,
 //   useTexture,
 // } from "@react-three/drei";
+// import useIsLaptop from "../../utils/useInLaptop"; // Assuming your hook is in this file
+// import LowQualityBackground from "../../utils/LowQualityBackgound";
 // import Loader from "../Loader";
 
-// const Cylinder = (props) => {
+// const Cube = (props) => {
 //   const [decal] = useTexture([props.imgUrl]);
 
 //   return (
@@ -161,17 +94,16 @@ export default CubeCanvas;
 //       <ambientLight intensity={0.3} />
 //       <directionalLight position={[0, 1, 1]} />
 //       <mesh castShadow receiveShadow scale={2.5}>
-//         <cylinderGeometry args={[0.75, 0.75, 1.5, 32]} />{" "}
-//         {/* Creates a cylinder */}
+//         <boxGeometry args={[1.5, 1.5, 1.5]} />
 //         <meshStandardMaterial
-//           color="#efefef"
+//           color="#e9ecef"
 //           polygonOffset
 //           polygonOffsetFactor={-2}
 //           flatShading
 //         />
 //         <Decal
-//           position={[0, 0, 0.75]} // Place the decal on the top face
-//           rotation={[0, 0, 0]} // No rotation
+//           position={[0, 0, 0.75]}
+//           rotation={[0, 0, 0]}
 //           flatShading
 //           map={decal}
 //         />
@@ -180,26 +112,30 @@ export default CubeCanvas;
 //   );
 // };
 
-// const CylinderCanvas = ({ icon }) => {
-//   return (
+// const CubeCanvas = ({ icon }) => {
+//   const isLaptop = useIsLaptop();
+
+//   return isLaptop ? (
 //     <Canvas
-//       frameloop="demand" // Optimize rendering for performance
+//       frameloop="demand"
 //       gl={{ preserveDrawingBuffer: true }}
-//       style={{ width: "100%", height: "auto" }} // Responsive size
+//       style={{ width: "100%", height: "auto" }}
 //     >
-//       <Suspense fallback={<Loader />}>
+//       <React.Suspense fallback={<Loader />}>
 //         <OrbitControls
 //           enableZoom={false}
-//           enablePan={false} // Disable unnecessary controls
+//           enablePan={false}
 //           maxPolarAngle={Math.PI / 2}
 //           minPolarAngle={Math.PI / 2}
 //         />
-//         <Cylinder imgUrl={icon} />
-//       </Suspense>
+//         <Cube imgUrl={icon} />
+//       </React.Suspense>
 
 //       <Preload all />
 //     </Canvas>
+//   ) : (
+//     <LowQualityBackground icon={icon} />
 //   );
 // };
 
-// export default CylinderCanvas;
+// export default CubeCanvas;

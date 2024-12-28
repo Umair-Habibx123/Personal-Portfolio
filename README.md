@@ -34,7 +34,7 @@ This portfolio website is a demonstration of my web development skills, featurin
 - **Frontend**: React, HTML, CSS, JavaScript
 - **Styling**: TailwindCSS (or any CSS framework you prefer)
 - **Form Handling**: EmailJS (for sending contact form submissions)
-- **Deployment**: GitHub Pages or Netlify
+- **Deployment**: Vercel.app / GitHub
 
 ## Installation
 

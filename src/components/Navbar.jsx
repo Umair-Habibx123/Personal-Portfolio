@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
@@ -7,13 +7,42 @@ import { close, menu, logo, logotext } from "../assets";
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const handleCloseNavbar = () => setToggle(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Show/hide navbar based on scroll direction
+      if (currentScrollY > lastScrollY) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+
+      // Close hamburger menu on mobile devices if open
+      if (toggle) {
+        setToggle(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, toggle]);
+
   return (
     <nav
-      className={`${styles.paddingX} w-full flex items-center py-2 fixed 
-      top-0 z-20 bg-flashWhite sm:opacity-[0.97] xxs:h-[12vh]`}
+      className={`${styles.paddingX} w-full flex items-center py-2 fixed
+    top-0 z-20 bg-flashWhite sm:opacity-[0.97] xxs:h-[12vh] ${
+      showNavbar ? "sm:translate-y-0" : "-translate-y-full"
+    } transition-transform`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         <Link
@@ -81,7 +110,7 @@ const Navbar = () => {
                     key={nav.id}
                     className={`${
                       active === nav.title ? "text-french" : "text-eerieBlack"
-                    } text-[16px] font-medium uppercase tracking-wide hover:text-taupe transition-colors cursor-pointer`}
+                    } hover:text-taupe text-[16px] font-medium uppercase font-mova tracking-wide transition-colors cursor-pointer`}
                     onClick={() => {
                       setActive(nav.title);
                       handleCloseNavbar();
