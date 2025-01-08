@@ -150,7 +150,7 @@ const projects = [
       },
     ],
     image: portfolio,
-    repo: 'https://github.com/Umair-Habibx123/Personal-Portfolio',
+    repo: 'https://github.com/',
     demo: 'https://umairhabib.vercel.app/',
   },
   {
@@ -172,8 +172,10 @@ const projects = [
       },
     ],
     image: bagsociety,
-    repo: 'https://github.com/Umair-Habibx123/BagSociety_React',
+    repo: 'https://github.com/',
     demo: 'https://bagsociety.vercel.app/',
+
+    //https://github.com/Umair-Habibx123/News-App/raw/main/APK/app-release.apk
   },
   {
     id: 'project-3',
@@ -194,8 +196,8 @@ const projects = [
       },
     ],
     image: newsapp,
-    repo: 'https://github.com/Umair-Habibx123/News-App',
-    demo: 'https://github.com/Umair-Habibx123/News-App/raw/main/APK/app-release.apk',
+    repo: 'https://github.com/',
+    demo: 'https://drive.google.com/uc?export=download&id=1-57F8mX7yjEAOgf9MyAF9WNgHw9yioOh',
   },
   {
     id: 'project-4',
@@ -212,8 +214,8 @@ const projects = [
       },
     ],
     image: aiapp,
-    repo: 'https://github.com/Umair-Habibx123/Gemini_AI_App',
-    demo: 'https://github.com/Umair-Habibx123/Gemini_AI_App/raw/main/APK/app-release.apk',
+    repo: 'https://github.com/',
+    demo: 'https://drive.google.com/uc?export=download&id=1GXIrzNS8SF605yzT0YDiQ9_VGsMXi9j5',
   },
   {
     id: 'project-5',
@@ -234,8 +236,8 @@ const projects = [
       },
     ],
     image: firestream,
-    repo: 'https://github.com/Umair-Habibx123/FireStream-Chat-App',
-    demo: 'https://github.com/Umair-Habibx123/FireStream-Chat-App/raw/main/APK/app-release.apk',
+    repo: 'https://github.com/',
+    demo: 'https://drive.google.com/uc?export=download&id=13u_c4Sga-Ywl7cZkuhnhS61HRGxsWlIB',
   },
 ];
 
