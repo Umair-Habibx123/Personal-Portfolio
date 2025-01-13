@@ -197,7 +197,7 @@ const projects = [
     ],
     image: newsapp,
     repo: 'https://github.com/',
-    demo: 'https://drive.google.com/uc?export=download&id=1-57F8mX7yjEAOgf9MyAF9WNgHw9yioOh',
+    demo: 'https://drive.google.com/uc?export=download&id=1SHxDxEK_CK0dumkzhNX32pNw-uufON4G',
   },
   {
     id: 'project-4',
@@ -215,7 +215,7 @@ const projects = [
     ],
     image: aiapp,
     repo: 'https://github.com/',
-    demo: 'https://drive.google.com/uc?export=download&id=1GXIrzNS8SF605yzT0YDiQ9_VGsMXi9j5',
+    demo: 'https://drive.google.com/uc?export=download&id=1pGtqth5i2Jbo6JYvwi13ORP15Pz0fFsi',
   },
   {
     id: 'project-5',
@@ -237,7 +237,7 @@ const projects = [
     ],
     image: firestream,
     repo: 'https://github.com/',
-    demo: 'https://drive.google.com/uc?export=download&id=13u_c4Sga-Ywl7cZkuhnhS61HRGxsWlIB',
+    demo: 'https://drive.google.com/uc?export=download&id=1z1Fc9nDl_FXpu8uYwdzA6__J82ejbDaV',
   },
 ];
 
