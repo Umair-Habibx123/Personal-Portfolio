@@ -22,7 +22,8 @@ import {
   aiapp,
   firestream,
   eziline,
-  numl
+  numl,
+  collaborativeedge
 } from '../assets';
 
 export const navLinks = [
@@ -137,8 +138,8 @@ const experiences = [
 const projects = [
   {
     id: 'project-1',
-    name: 'Personal Portfolio',
-    description: 'A modern portfolio website showcasing skills, projects, and experiences with an interactive UI.',
+    name: 'Collaborative Edge',
+    description: 'MERN stack portal for student-teacher-industry collaboration with real-time updates & approval workflows.',
     tags: [
       {
         name: 'react',
@@ -149,13 +150,13 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: portfolio,
+    image: collaborativeedge,
     repo: 'https://github.com/',
     demo: 'https://umairhabib.vercel.app/',
   },
   {
     id: 'project-2',
-    name: 'Bag Society (Ecommerce)',
+    name: 'Ecommerce Website',
     description: 'A fully functional e-commerce application for showcasing and purchasing products online.',
     tags: [
       {
@@ -174,8 +175,6 @@ const projects = [
     image: bagsociety,
     repo: 'https://github.com/',
     demo: 'https://bagsociety.vercel.app/',
-
-    //https://github.com/Umair-Habibx123/News-App/raw/main/APK/app-release.apk
   },
   {
     id: 'project-3',
@@ -197,7 +196,7 @@ const projects = [
     ],
     image: newsapp,
     repo: 'https://github.com/',
-    demo: 'https://drive.google.com/uc?export=download&id=1SHxDxEK_CK0dumkzhNX32pNw-uufON4G',
+    demo: 'https://github.com/',
   },
   {
     id: 'project-4',
@@ -215,7 +214,7 @@ const projects = [
     ],
     image: aiapp,
     repo: 'https://github.com/',
-    demo: 'https://drive.google.com/uc?export=download&id=1pGtqth5i2Jbo6JYvwi13ORP15Pz0fFsi',
+    demo: 'https://github.com/',
   },
   {
     id: 'project-5',
@@ -237,7 +236,7 @@ const projects = [
     ],
     image: firestream,
     repo: 'https://github.com/',
-    demo: 'https://drive.google.com/uc?export=download&id=1z1Fc9nDl_FXpu8uYwdzA6__J82ejbDaV',
+    demo: 'https://github.com/',
   },
 ];
 

@@ -45,6 +45,7 @@ import bagsociety from './projects/bagsociety.png';
 import newsapp from './projects/newsapp.png';
 import aiapp from './projects/aiapp.png';
 import firestream from './projects/firestream.png';
+import collaborativeedge from "./projects/collaborativeEdge.png"
 
 export {
   bwmap,
@@ -87,5 +88,6 @@ export {
   aiapp,
   firestream,
   eziline,
-  numl
+  numl,
+  collaborativeedge
 };

@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { styles } from "../styles";
-import { navLinks } from "../constants";
 import { umair, bwmap, worldmap } from "../assets";
 
 const Hero = () => {
@@ -68,8 +66,7 @@ const Hero = () => {
         >
           <a href="#about">
             <div
-              className="w-[35px] h-[64px] rounded-3xl border-4 
-            border-french border-dim flex
+              className="w-[35px] h-[64px] rounded-3xl border-4 border-dim flex
             justify-center items-start p-2"
             >
               <motion.div
