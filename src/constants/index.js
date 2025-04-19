@@ -152,7 +152,7 @@ const projects = [
     ],
     image: collaborativeedge,
     repo: 'https://github.com/',
-    demo: 'https://umairhabib.vercel.app/',
+    demo: 'https://collaborative-edge.vercel.app/',
   },
   {
     id: 'project-2',
@@ -174,7 +174,7 @@ const projects = [
     ],
     image: bagsociety,
     repo: 'https://github.com/',
-    demo: 'https://bagsociety.vercel.app/',
+    demo: 'https://ec3store.vercel.app/',
   },
   {
     id: 'project-3',
