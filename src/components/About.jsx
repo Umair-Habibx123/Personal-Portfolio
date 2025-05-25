@@ -43,7 +43,7 @@ const About = () => {
       >
         Hi, I'm Umair, currently pursuing a Bachelor's degree in Software
         Engineering from NUML University. I have experience in web development
-        using React and mobile app development for both Android and Flutter. I
+        using React/Angular and mobile app development for both Android and Flutter. I
         enjoy working on diverse projects, solving problems, and continuously
         learning new technologies to enhance my skills. I'm passionate about
         building efficient, scalable solutions and creating seamless user

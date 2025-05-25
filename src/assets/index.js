@@ -46,6 +46,12 @@ import newsapp from './projects/newsapp.png';
 import aiapp from './projects/aiapp.png';
 import firestream from './projects/firestream.png';
 import collaborativeedge from "./projects/collaborativeEdge.png"
+import angular from "./icons/angular.png"
+import MERN from "./icons/MERN.png"
+import angular2 from "./tech/angular.png"
+import typescript from "./tech/typescript.png"
+import PEP from "./projects/PEP.png"
+import AimsSoft from "./company/AimsSoft.png"
 
 export {
   bwmap,
@@ -89,5 +95,11 @@ export {
   firestream,
   eziline,
   numl,
-  collaborativeedge
+  collaborativeedge,
+  angular,
+  MERN,
+  angular2,
+  typescript,
+  PEP,
+  AimsSoft
 };

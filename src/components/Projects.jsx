@@ -20,9 +20,9 @@ const ProjectCard = ({
   return (
     <div
       className={`relative ${
-        active === id ? "lg:flex-[3.5] flex-[10]" : "lg:flex-[0.5] flex-[2]"
-      } flex items-center justify-center min-w-[170px] 
-  h-[420px] cursor-pointer card-shadow sm:h-[420px] h-[300px]`}
+        active === id ? "lg:flex-[2] flex-[10]" : "lg:flex-[1] flex-[2]"
+      } flex items-center justify-center min-w-[120px] 
+   cursor-pointer card-shadow sm:h-[420px] h-[300px] transition-all duration-300`}
       onClick={() => handleClick(id)}
     >
       <div
@@ -41,7 +41,7 @@ const ProjectCard = ({
           <h3
             className="font-extrabold font-beckman uppercase w-[200px] h-[30px] 
     whitespace-nowrap sm:text-[27px] text-[16px] text-timberWolf tracking-[1px]
-    absolute z-0 lg:bottom-[7rem] lg:rotate-[-90deg] lg:origin-[0,0]
+    absolute lg:bottom-[7rem] lg:rotate-[-90deg] lg:origin-[0,0]
     leading-none z-20"
           >
             {name}

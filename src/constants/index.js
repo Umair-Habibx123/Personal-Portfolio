@@ -1,6 +1,6 @@
 import {
-  frontend,
-  backend,
+  angular,
+  MERN,
   flutter,
   android,
   html,
@@ -15,15 +15,17 @@ import {
   dotnet,
   rubyrails,
   sql,
-  git,
-  portfolio,
+  AimsSoft,
   bagsociety,
   newsapp,
   aiapp,
   firestream,
   eziline,
   numl,
-  collaborativeedge
+  collaborativeedge,
+  typescript,
+  angular2,
+  PEP,
 } from '../assets';
 
 export const navLinks = [
@@ -43,12 +45,12 @@ export const navLinks = [
 
 const services = [
   {
-    title: 'Frontend Developer',
-    icon: frontend,
+    title: 'MERN Stack Developer',
+    icon: MERN,
   },
   {
-    title: 'Backend Developer',
-    icon: backend,
+    title: 'Angular Developer',
+    icon: angular,
   },
   {
     title: 'Flutter Developer',
@@ -75,8 +77,16 @@ const technologies = [
     icon: javascript,
   },
   {
+    name: 'TypeScript',
+    icon: typescript,
+  },
+  {
     name: 'React JS',
     icon: react,
+  },
+   {
+    name: 'Angular',
+    icon: angular2,
   },
   {
     name: 'Tailwind CSS',
@@ -110,13 +120,20 @@ const technologies = [
     name: 'SQL',
     icon: sql,
   },
-  {
-    name: 'git',
-    icon: git,
-  },
+  // {
+  //   name: 'git',
+  //   icon: git,
+  // },
 ];
 
 const experiences = [
+  {
+    title: 'Angular Development Intern',
+    company_name: 'AimsSoft Software House',
+    icon: AimsSoft, // Add the appropriate icon variable for Eziline Software House
+    iconBg: '#333333',
+    date: 'January 2025 - May 2025',
+  },
   {
     title: 'Flutter Development Intern',
     company_name: 'Eziline Software House',
@@ -238,6 +255,32 @@ const projects = [
     repo: 'https://github.com/',
     demo: 'https://github.com/',
   },
+  {
+    id: 'project-6',
+    name: 'Pak-Education Portal',
+    description: 'Platform for exploring Pakistani universities and programs, with an "Apply Through Us" option for easy student applications',
+    tags: [
+      {
+        name: 'Angular',
+        color: 'red-text-gradient',
+      },
+      {
+        name: '.NET Core',
+        color: 'purple-text-gradient',
+      },
+      {
+        name: 'SQL Server',
+        color: 'blue-text-gradient',
+      },
+      {
+        name: 'Bootstrap',
+        color: 'purple-text-gradient',
+      },
+    ],
+    image: PEP,
+    repo: 'https://github.com/',
+    demo: 'http://95.217.205.57:13400/#/',
+  }
 ];
 
 export { services, technologies, experiences, projects };
