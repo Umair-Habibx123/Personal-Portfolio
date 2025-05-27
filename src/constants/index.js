@@ -153,26 +153,8 @@ const experiences = [
 
 
 const projects = [
-  {
+   {
     id: 'project-1',
-    name: 'Collaborative Edge',
-    description: 'MERN stack portal for student-teacher-industry collaboration with real-time updates & approval workflows.',
-    tags: [
-      {
-        name: 'react',
-        color: 'blue-text-gradient',
-      },
-      {
-        name: 'tailwind',
-        color: 'pink-text-gradient',
-      },
-    ],
-    image: collaborativeedge,
-    repo: 'https://github.com/',
-    demo: 'https://collaborative-edge.vercel.app/',
-  },
-  {
-    id: 'project-2',
     name: 'Ecommerce Website',
     description: 'A fully functional e-commerce application for showcasing and purchasing products online.',
     tags: [
@@ -194,6 +176,24 @@ const projects = [
     demo: 'https://ec3store.vercel.app/',
   },
   {
+    id: 'project-2',
+    name: 'Collaborative Edge',
+    description: 'MERN stack portal for student-teacher-industry collaboration with real-time updates & approval workflows.',
+    tags: [
+      {
+        name: 'react',
+        color: 'blue-text-gradient',
+      },
+      {
+        name: 'tailwind',
+        color: 'pink-text-gradient',
+      },
+    ],
+    image: collaborativeedge,
+    repo: 'https://github.com/',
+    demo: 'https://collaborative-edge.vercel.app/',
+  },
+  {
     id: 'project-3',
     name: 'News App',
     description: 'A news application that fetches and displays real-time news articles from various categories using the News API.',
@@ -213,7 +213,7 @@ const projects = [
     ],
     image: newsapp,
     repo: 'https://github.com/',
-    demo: 'https://github.com/',
+    demo: 'https://github.com/Umair-Habibx123/news_app/raw/refs/heads/master/APK/news_app.apk',
   },
   {
     id: 'project-4',
@@ -231,7 +231,7 @@ const projects = [
     ],
     image: aiapp,
     repo: 'https://github.com/',
-    demo: 'https://github.com/',
+    demo: 'https://github.com/Umair-Habibx123/gemini_ai_app/raw/refs/heads/master/APK/gemini_ai_app.apk',
   },
   {
     id: 'project-5',
@@ -253,7 +253,7 @@ const projects = [
     ],
     image: firestream,
     repo: 'https://github.com/',
-    demo: 'https://github.com/',
+    demo: 'https://github.com/Umair-Habibx123/FireStream/raw/refs/heads/master/APK/FireStream.apk',
   },
   {
     id: 'project-6',
