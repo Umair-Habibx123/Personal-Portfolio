@@ -279,7 +279,7 @@ const projects = [
     ],
     image: PEP,
     repo: 'https://github.com/',
-    demo: 'http://95.217.205.57:13400/#/',
+    demo: 'https://pakistaneducationportal.com/',
   }
 ];
 
