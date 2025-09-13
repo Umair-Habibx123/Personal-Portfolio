@@ -193,46 +193,46 @@ const projects = [
     repo: 'https://github.com/',
     demo: 'https://collaborative-edge.vercel.app/',
   },
-  {
-    id: 'project-3',
-    name: 'News App',
-    description: 'A news application that fetches and displays real-time news articles from various categories using the News API.',
-    tags: [
-      {
-        name: 'Flutter',
-        color: 'blue-text-gradient',
-      },
-      {
-        name: 'Firebase',
-        color: 'green-text-gradient',
-      },
-      {
-        name: 'News API',
-        color: 'pink-text-gradient',
-      },
-    ],
-    image: newsapp,
-    repo: 'https://github.com/',
-    demo: 'https://github.com/Umair-Habibx123/news_app/raw/refs/heads/master/APK/news_app.apk',
-  },
-  {
-    id: 'project-4',
-    name: 'Gemini AI App',
-    description: 'An innovative app that processes text and image commands, delivering AI-powered insights, recommendations, and actions based on user inputs.',
-    tags: [
-      {
-        name: 'Flutter',
-        color: 'blue-text-gradient',
-      },
-      {
-        name: 'API',
-        color: 'green-text-gradient',
-      },
-    ],
-    image: aiapp,
-    repo: 'https://github.com/',
-    demo: 'https://github.com/Umair-Habibx123/gemini_ai_app/raw/refs/heads/master/APK/gemini_ai_app.apk',
-  },
+  // {
+  //   id: 'project-3',
+  //   name: 'News App',
+  //   description: 'A news application that fetches and displays real-time news articles from various categories using the News API.',
+  //   tags: [
+  //     {
+  //       name: 'Flutter',
+  //       color: 'blue-text-gradient',
+  //     },
+  //     {
+  //       name: 'Firebase',
+  //       color: 'green-text-gradient',
+  //     },
+  //     {
+  //       name: 'News API',
+  //       color: 'pink-text-gradient',
+  //     },
+  //   ],
+  //   image: newsapp,
+  //   repo: 'https://github.com/',
+  //   demo: 'https://github.com/Umair-Habibx123/news_app/raw/refs/heads/master/APK/news_app.apk',
+  // },
+  // {
+  //   id: 'project-4',
+  //   name: 'Gemini AI App',
+  //   description: 'An innovative app that processes text and image commands, delivering AI-powered insights, recommendations, and actions based on user inputs.',
+  //   tags: [
+  //     {
+  //       name: 'Flutter',
+  //       color: 'blue-text-gradient',
+  //     },
+  //     {
+  //       name: 'API',
+  //       color: 'green-text-gradient',
+  //     },
+  //   ],
+  //   image: aiapp,
+  //   repo: 'https://github.com/',
+  //   demo: 'https://github.com/Umair-Habibx123/gemini_ai_app/raw/refs/heads/master/APK/gemini_ai_app.apk',
+  // },
   {
     id: 'project-5',
     name: 'FireStream Chat App',
