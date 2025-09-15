@@ -109,7 +109,7 @@ const Experience = () => {
               onClick={() =>
                 window.open(
                 //  "https://drive.google.com/file/d/173XzuEfAW2wNHtbvleZicnYuWvk3XlZb/view?usp=sharing",
-                  "https://drive.google.com/",
+                  "https://drive.google.com/file/d/1aqEYSciASEpvwrR2-jDVVyXE1XNk6uTC/view?usp=sharing",
                   "_blank"
                 )
               }

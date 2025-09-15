@@ -19,10 +19,11 @@ const ProjectCard = ({
 }) => {
   return (
     <div
-      className={`relative ${
-        active === id ? "lg:flex-[2] flex-[10]" : "lg:flex-[1] flex-[2]"
-      } flex items-center justify-center min-w-[120px] 
-   cursor-pointer card-shadow sm:h-[420px] h-[300px] transition-all duration-300`}
+      className={`relative 
+    ${active === id ? "lg:col-span-2 lg:row-span-1" : "col-span-1"} 
+    flex items-center justify-center cursor-pointer card-shadow 
+    h-[260px] sm:h-[320px] md:h-[380px] lg:h-[420px] 
+    transition-all duration-300`}
       onClick={() => handleClick(id)}
     >
       <div
@@ -147,7 +148,14 @@ const Projects = () => {
         viewport={{ once: false, amount: 0.25 }}
         className={`${styles.innerWidth} mx-auto flex flex-col`}
       >
-        <div className="mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-5">
+        <div
+          className="mt-[50px] grid gap-5
+      grid-cols-1 
+      sm:grid-cols-2 
+      lg:grid-cols-3 
+      xl:grid-cols-4
+      auto-rows-[minmax(320px,auto)]"
+        >
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
