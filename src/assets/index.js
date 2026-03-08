@@ -52,6 +52,7 @@ import angular2 from "./tech/angular.png"
 import typescript from "./tech/typescript.png"
 import PEP from "./projects/PEP.png"
 import AimsSoft from "./company/AimsSoft.png"
+import GalvanAi from "./company/GalvanAi.png";
 
 // Simple SVG arrows if you don't have arrow assets
 const leftArrow = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSIxNSAxOCA5IDEyIDE1IDYiPjwvcG9seWxpbmU+PC9zdmc+";
@@ -107,5 +108,6 @@ export {
   angular2,
   typescript,
   PEP,
-  AimsSoft
+  AimsSoft,
+  GalvanAi
 };

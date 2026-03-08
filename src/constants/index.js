@@ -16,6 +16,7 @@ import {
   rubyrails,
   sql,
   AimsSoft,
+  GalvanAi,
   bagsociety,
   newsapp,
   aiapp,
@@ -127,6 +128,13 @@ const technologies = [
 ];
 
 const experiences = [
+   {
+    title: 'Full Stack Developer',
+    company_name: 'Galvan AI',
+    icon: GalvanAi, // Add the appropriate icon variable for Galvan AI
+    iconBg: '#333333',
+    date: 'November 2025 - January 2026',
+  },,
   {
     title: 'Angular Development Intern',
     company_name: 'AimsSoft Software House',
@@ -140,13 +148,6 @@ const experiences = [
     icon: eziline, // Add the appropriate icon variable for Eziline Software House
     iconBg: '#333333',
     date: 'July 2024 - October 2024',
-  },
-  {
-    title: 'Web Development',
-    company_name: 'Academic Experience',
-    icon: numl, // Add the appropriate icon variable for academic experience
-    iconBg: '#333333',
-    date: 'Academic Experience', // If there's a specific timeline, you can add it here
   },
 ];
 

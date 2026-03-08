@@ -17,10 +17,11 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState({ isOpen: false, message: "", type: "" });
 
-  const serviceId = process.env.REACT_APP_SERVICE_ID;
-  const templateId = process.env.REACT_APP_TEMPLATE_ID;
-  const userId = process.env.REACT_APP_USER_ID;
-  const toEmail = process.env.REACT_APP_TO_EMAIL;
+const serviceId = import.meta.env.VITE_SERVICE_ID;
+const templateId = import.meta.env.VITE_TEMPLATE_ID;
+const userId = import.meta.env.VITE_USER_ID;
+const toEmail = import.meta.env.VITE_TO_EMAIL;
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
