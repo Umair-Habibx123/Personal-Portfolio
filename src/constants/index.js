@@ -214,7 +214,7 @@ const projects = [
     ],
     image: newsapp,
     repo: 'https://github.com/Umair-Habibx123',
-    demo: 'https://github.com/Umair-Habibx123/news_app/raw/refs/heads/master/APK/news_app.apk',
+    demo: 'https://github.com/Umair-Habibx123/news_app/releases/download/v1.0/news_app.apk',
   },
   {
     id: 'project-4',
@@ -232,7 +232,7 @@ const projects = [
     ],
     image: aiapp,
     repo: 'https://github.com/Umair-Habibx123',
-    demo: 'https://github.com/Umair-Habibx123/gemini_ai_app/raw/refs/heads/master/APK/gemini_ai_app.apk',
+    demo: 'https://github.com/Umair-Habibx123/gemini_ai_app/releases/download/v1.0/gemini_ai_app.apk',
   },
   {
     id: 'project-5',
@@ -254,7 +254,7 @@ const projects = [
     ],
     image: firestream,
     repo: 'https://github.com/Umair-Habibx123',
-    demo: 'https://github.com/Umair-Habibx123/FireStream/raw/refs/heads/master/APK/FireStream.apk',
+    demo: 'https://github.com/Umair-Habibx123/FireStream/releases/download/v1.0/FireStream.apk',
   },
   {
     id: 'project-6',
