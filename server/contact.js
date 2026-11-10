@@ -10,6 +10,7 @@
 
 import crypto from 'node:crypto';
 import nodemailer from 'nodemailer';
+import { renderEmail } from './email-template.js';
 
 const LIMITS = { name: 100, email: 200, subject: 150, message: 5000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -78,6 +79,7 @@ async function sendEmail(record, env) {
     replyTo: { name: record.name, address: record.email },
     subject,
     text,
+    html: renderEmail(record, { siteUrl: env.SITE_URL || 'https://umairhabib.vercel.app' }),
   });
 }
 
