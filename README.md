@@ -1,90 +1,79 @@
-# Personal Portfolio Website
+# Umair Habib · Portfolio
 
-Welcome to my personal portfolio website! This website showcases my skills, projects, and professional journey as a developer. It serves as a platform for sharing my work, knowledge, and experiences with potential clients and collaborators.
+My portfolio site: **[umairhabib.vercel.app](https://umairhabib.vercel.app)**. Built with React, Vite and Tailwind CSS, hosted on Vercel's free plan.
 
-## Table of Contents
+The design mixes my original site (black-and-white world map, diagonal light/dark hero, 3D technology balls, expandable project cards, the alternating timeline) with newer touches: a violet → pink → amber accent, animated shader backgrounds and a working contact form.
 
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Tech Stack](#tech-stack)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Contributing](#contributing)
-7. [License](#license)
+## Edit the content
 
-## Introduction
+All text, links, projects and jobs are small JSON files in [`src/data/`](src/data). There's one file per section, one per project and one per company. [`src/data/README.md`](src/data/README.md) explains which file controls what. No code changes are needed to update the site.
 
-This portfolio website is a demonstration of my web development skills, featuring a clean and responsive design. It includes sections like:
+- **Resume:** put PDFs in `data/resume/`. Only the file named in `src/data/links.json` → `resume.file` is published (now `Umair Habib - Resume.pdf`), so older versions can stay in the folder.
+- **Images:** put them in `src/assets/img/` and refer to them by path, for example `"projects/attendy.webp"`. Optionally save a smaller copy next to it as `name@640.webp`, and phones will download that instead.
 
-- **About Me**: A brief introduction to who I am and my professional background.
-- **Projects**: A showcase of my personal and professional projects with detailed descriptions and links to live demos or repositories.
-- **Contact**: A contact form that allows visitors to get in touch with me directly.
-- **Skills**: A summary of the technologies I am proficient in.
+## Shaders
 
-## Features
+The dark sections have animated backgrounds from [Paper Shaders](https://shaders.paper.design) (`@paper-design/shaders`, the same library as the Next.js base template). Which shader goes where is set in [`src/data/shaders.json`](src/data/shaders.json):
 
-- Responsive design for mobile and desktop views
-- Interactive project showcase with links to live demos and repositories
-- Contact form with email integration
-- Smooth animations and transitions for a professional user experience
-- Customizable sections for adding more information as needed
+| Section | Shader | Notes |
+|---|---|---|
+| Technologies | **meshGradient** | Blended over the skyline photo at 70% (`"blend": "screen"`) |
+| Projects | **meshGradient** | Full strength, different starting point (`seed: 2`) |
+| Contact | **meshGradient** | Full strength, different starting point (`seed: 3`) |
 
-## Tech Stack
+**All 20 shaders you can use, with every setting:** [docs/SHADERS.md](docs/SHADERS.md). To change one, set `"shader"` to a name from that list and put its settings under `"uniforms"`. Set `"shader": null` to turn a section's shader off. Regenerate the list after updating the library with `npm run shaders:list`.
 
-- **Frontend**: React, HTML, CSS, JavaScript
-- **Styling**: TailwindCSS (or any CSS framework you prefer)
-- **Form Handling**: EmailJS (for sending contact form submissions)
-- **Deployment**: Vercel.app / GitHub
+Shaders load only when a dark section comes near the screen, render at low resolution and pause off screen. Visitors who turn off animations in their system settings, or whose browser lacks WebGL, see a soft CSS glow instead.
 
-## Installation
+## Contact form
 
-To get started with this project locally, follow these steps:
+`POST /api/contact` (a Vercel function, [`api/contact.js`](api/contact.js)) does two things for every message:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Umair-Habibx123/Personal-Portfolio
-   ```
+1. **Emails it to you over SMTP** (nodemailer).
+2. **Saves it as its own JSON file in a private GitHub repo**, so nothing is lost if SMTP fails.
 
-2. Navigate to the project directory:
-   ```bash
-   cd portfolio
-   ```
+The visitor sees "Message sent" if either step worked. They see an error only if both failed. Spam protection is a hidden field, a minimum fill time and a per-IP rate limit.
 
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+**Setup:** copy `.env.example` to `.env` (the comments there explain every value) and add the same variables in Vercel → Settings → Environment Variables.
 
-4. Create a `.env` file in the root directory with your EmailJS credentials (if using the contact form functionality):
-   ```bash
-   REACT_APP_SERVICE_ID=your_service_id
-   REACT_APP_TEMPLATE_ID=your_template_id
-   REACT_APP_USER_ID=your_user_id
-   REACT_APP_TO_EMAIL=your_email@example.com
-   ```
+**Read your messages in a local SQLite file:**
 
-5. Start the development server:
-   ```bash
-   npm start
-   ```
+```bash
+npm run messages:sync   # downloads new messages into data/messages.db
+npm run messages:list   # prints the newest 20 (npm run messages:list -- 50 for more)
+```
 
-Now, open your browser and go to `http://localhost:3000` to see the website in action.
+## Run it
 
-## Usage
+Needs Node.js 22.5 or newer.
 
-Once the website is up and running, you can explore the various sections, such as:
+```bash
+npm install
+npm run dev        # http://localhost:5173 (the contact form works locally with your .env)
+npm run build      # production build in dist/, with the page pre-rendered to HTML
+npm run preview    # serve that build locally
+```
 
-- **Home**: An introductory section with your name and a brief bio.
-- **About Me**: Detailed information about your background and experiences.
-- **Projects**: A collection of your professional and personal projects.
-- **Contact**: A form for visitors to reach out to you.
+## Performance
 
-You can customize each section by modifying the relevant components and adding your own content.
+The site is built to load fast on a free plan:
 
-## Contributing
+- **Pre-rendered HTML:** the page is rendered at build time ([`scripts/prerender.mjs`](scripts/prerender.mjs)), so the hero appears before any JavaScript runs. The hero's entrance animation is CSS, for the same reason.
+- **Split, cached JavaScript:** React and the animation library are separate files that stay cached across deploys. three.js (the 3D balls) and the shader library load only when their sections come near the screen. The 3D balls load on desktop only and share one canvas, which pauses off screen.
+- **Images:** all WebP. Phones download the `@640` copies. Below-the-fold images load lazily, and the hero downloads one world map, not both.
+- **Fonts:** self-hosted. The original display fonts are trimmed to Latin characters and converted to WOFF2 (164 KB → 34 KB).
+- **Ads:** AdSense loads only after the page has finished loading and gone idle.
+- **Caching:** everything in `/assets` is cached for a year (file names change when the content does).
 
-Contributions are always welcome! If you'd like to improve this portfolio website, feel free to fork the repository and submit a pull request. Please ensure that your code follows the project's style guidelines and passes any tests if applicable.
+## Project structure
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
+api/contact.js          Vercel function for the contact form
+server/contact.js       the form logic (also used by the dev server)
+scripts/                messages sync, shader list, pre-rendering
+src/data/               all site content (JSON)
+src/components/         one component per section
+src/assets/img/         images; fonts are in src/fonts/
+docs/SHADERS.md         every available shader and its settings
+data/resume/            resume PDFs (one is published)
+```

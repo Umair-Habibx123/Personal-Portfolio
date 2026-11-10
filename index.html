@@ -1,21 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/logo.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Umair | Portfolio</title>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2359801234765649"
-      crossorigin="anonymous"
-    ></script>
+    <meta name="theme-color" content="#f4f4f6" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Filled in from src/data/site.json at build time -->
+    <title>%SEO_TITLE%</title>
+    <meta name="description" content="%SEO_DESCRIPTION%" />
+    <link rel="canonical" href="%SITE_URL%" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="%SITE_URL%" />
+    <meta property="og:title" content="%SEO_TITLE%" />
+    <meta property="og:description" content="%SEO_DESCRIPTION%" />
+    <meta property="og:image" content="%SITE_URL%/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "%NAME%",
+        "jobTitle": "%JOB_TITLE%",
+        "worksFor": { "@type": "Organization", "name": "%COMPANY%" },
+        "url": "%SITE_URL%",
+        "sameAs": %SAME_AS%
+      }
+    </script>
+
+    <!-- AdSense (~700 KB of scripts) loads only after the page has loaded and gone idle,
+         so it never slows down the first view. -->
+    <script>
+      addEventListener('load', function () {
+        var go = function () {
+          var s = document.createElement('script');
+          s.async = true;
+          s.crossOrigin = 'anonymous';
+          s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2359801234765649';
+          document.head.appendChild(s);
+        };
+        setTimeout(function () { (window.requestIdleCallback || setTimeout)(go, { timeout: 4000 }); }, 2500);
+      });
+    </script>
   </head>
-  <body class="bg-night">
+  <body>
+    <noscript>This site needs JavaScript. You can reach me on LinkedIn or by email instead.</noscript>
     <div id="root"></div>
-    <script type="module" src="/src/index.jsx"></script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

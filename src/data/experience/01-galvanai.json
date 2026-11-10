@@ -1,0 +1,41 @@
+{
+  "company": "GalvanAI",
+  "logo": "logos/galvanai.webp",
+  "location": "Islamabad · Hybrid",
+  "roles": [
+    {
+      "title": "Associate Software Engineer",
+      "type": "Full-time",
+      "period": "Feb 2026 – Present",
+      "points": [
+        "Lead developer of the company's SaaS base template (Next.js, FastAPI, PostgreSQL), which all client products are built on: MFA and passkeys, a role and permission builder, organizations, Stripe subscriptions, real-time chat and right-to-left languages.",
+        "Built a white-label AI document assistant (RAG) with strict tenant isolation, cited answers, tiered plans with AI credits and bring-your-own-LLM settings.",
+        "Built a UK self-assessment tax filing platform end to end: SA100 and SA800 returns as XML, submitted to HMRC with fraud-prevention headers, with a tax calculator scored against HMRC's 273 official test cases.",
+        "Run production: Docker, GitHub Actions CI/CD, Terraform for AWS, VPS hosting with Nginx/Caddy and PM2, plus backup and restore procedures."
+      ],
+      "tags": [
+        "Next.js",
+        "FastAPI",
+        "PostgreSQL",
+        "RAG",
+        "Stripe",
+        "Docker"
+      ]
+    },
+    {
+      "title": "Full Stack Engineer",
+      "type": "Contract",
+      "period": "Nov 2025 – Jan 2026",
+      "points": [
+        "Started the SaaS base template in December 2025: the Next.js + FastAPI architecture, authentication and role-based access that later products were built on.",
+        "Built REST APIs in Flask and FastAPI with PostgreSQL, and admin dashboards in Next.js and React."
+      ],
+      "tags": [
+        "Next.js",
+        "React",
+        "Flask",
+        "PostgreSQL"
+      ]
+    }
+  ]
+}

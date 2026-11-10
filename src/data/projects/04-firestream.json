@@ -1,0 +1,16 @@
+{
+  "name": "FireStream",
+  "category": [
+    "Mobile"
+  ],
+  "image": "projects/firestream.webp",
+  "summary": "Real-time chat with one-to-one and group chats, images, files and voice notes, admin-controlled groups and scheduled messages.",
+  "tags": [
+    "Flutter",
+    "Firebase"
+  ],
+  "links": {
+    "github": "https://github.com/Umair-Habibx123/firestream",
+    "apk": "https://github.com/Umair-Habibx123/firestream/releases/latest"
+  }
+}

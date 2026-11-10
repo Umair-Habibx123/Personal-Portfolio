@@ -1,0 +1,36 @@
+{
+  "name": "Umair Habib",
+  "shortName": "Umair",
+  "initials": "UH",
+  "greeting": "Hi, I'm",
+  "role": "Associate Software Engineer",
+  "company": "GalvanAI",
+  "location": "Islamabad, Pakistan",
+  "availability": "Open to collaboration",
+  "photo": "people/umair.webp",
+  "rotatingWords": [
+    "multi-tenant SaaS",
+    "AI-powered products",
+    "Flutter mobile apps",
+    "secure APIs"
+  ],
+  "intro": "Associate Software Engineer at GalvanAI. I take products from the database schema to production: authentication and permissions, subscriptions, AI document chat and the servers they run on.",
+  "stats": [
+    {
+      "value": "1+",
+      "label": "year at GalvanAI"
+    },
+    {
+      "value": "12",
+      "label": "shipped projects"
+    },
+    {
+      "value": "4",
+      "label": "Android apps released"
+    },
+    {
+      "value": "3.6",
+      "label": "CGPA, BS Software Eng."
+    }
+  ]
+}

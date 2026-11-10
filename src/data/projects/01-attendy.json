@@ -1,0 +1,18 @@
+{
+  "name": "Attendy",
+  "category": [
+    "Mobile"
+  ],
+  "featured": true,
+  "image": "projects/attendy.webp",
+  "summary": "Team attendance app. One-tap check-ins on server time, admin-approved leave, work schedules and CSV/PDF reports. Security rules run on Firebase's servers and are covered by 23 automated tests.",
+  "tags": [
+    "Flutter",
+    "Firebase",
+    "Security rules"
+  ],
+  "links": {
+    "github": "https://github.com/Umair-Habibx123/attendy",
+    "apk": "https://github.com/Umair-Habibx123/attendy/releases/latest"
+  }
+}

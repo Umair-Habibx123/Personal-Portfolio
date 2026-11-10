@@ -1,0 +1,17 @@
+{
+  "name": "News App",
+  "category": [
+    "Mobile"
+  ],
+  "image": "projects/news-app.webp",
+  "summary": "News reader with headlines by category, search, offline bookmarks and an interface in English, Urdu or Arabic.",
+  "tags": [
+    "Flutter",
+    "REST API",
+    "i18n"
+  ],
+  "links": {
+    "github": "https://github.com/Umair-Habibx123/news-app",
+    "apk": "https://github.com/Umair-Habibx123/news-app/releases/latest"
+  }
+}

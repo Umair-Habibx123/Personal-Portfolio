@@ -1,0 +1,17 @@
+{
+  "name": "Pakistan Education Portal",
+  "category": [
+    "Web"
+  ],
+  "image": "projects/pakistan-education-portal.webp",
+  "summary": "Search Pakistani universities and programs and apply for admission, with an admin panel. Built with a team at AIMS Soft.",
+  "tags": [
+    "Angular",
+    ".NET",
+    "Bootstrap"
+  ],
+  "links": {
+    "live": "https://pakistaneducationportal.com",
+    "github": "https://github.com/Umair-Habibx123/pakistan-education-portal"
+  }
+}

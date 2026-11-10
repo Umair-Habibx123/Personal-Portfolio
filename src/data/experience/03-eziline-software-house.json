@@ -1,0 +1,22 @@
+{
+  "company": "Eziline Software House",
+  "logo": "logos/eziline.webp",
+  "location": "Remote",
+  "roles": [
+    {
+      "title": "Flutter Developer Intern",
+      "type": "Internship",
+      "period": "Jul 2024 – Sep 2024",
+      "points": [
+        "Implemented secure sign-in and sign-up flows for cross-platform Flutter apps.",
+        "Built real-time data sync and screens following Material Design guidelines."
+      ],
+      "tags": [
+        "Flutter",
+        "Dart",
+        "Material Design"
+      ]
+    }
+  ],
+  "logoBg": "#1f1f1f"
+}

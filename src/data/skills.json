@@ -1,0 +1,127 @@
+{
+  "eyebrow": "My skills",
+  "title": "Technologies.",
+  "hint": "Drag a ball to spin it.",
+  "balls": [
+    {
+      "name": "React",
+      "icon": "tech/react.png"
+    },
+    {
+      "name": "Next.js",
+      "icon": "tech/nextjs.png"
+    },
+    {
+      "name": "TypeScript",
+      "icon": "tech/typescript.png"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "tech/javascript.png"
+    },
+    {
+      "name": "Node.js",
+      "icon": "tech/node.png"
+    },
+    {
+      "name": "FastAPI",
+      "icon": "tech/fastapi.png"
+    },
+    {
+      "name": "Python",
+      "icon": "tech/python.png"
+    },
+    {
+      "name": "PostgreSQL",
+      "icon": "tech/postgresql.png"
+    },
+    {
+      "name": "MongoDB",
+      "icon": "tech/mongodb.png"
+    },
+    {
+      "name": "Docker",
+      "icon": "tech/docker.png"
+    },
+    {
+      "name": "Flutter",
+      "icon": "tech/flutter.png"
+    },
+    {
+      "name": "Firebase",
+      "icon": "tech/firebase.png"
+    },
+    {
+      "name": "Angular",
+      "icon": "tech/angular.png"
+    },
+    {
+      "name": "Tailwind CSS",
+      "icon": "tech/tailwind.png"
+    }
+  ],
+  "groups": [
+    {
+      "group": "Frontend",
+      "items": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Angular",
+        "Tailwind CSS",
+        "Framer Motion"
+      ]
+    },
+    {
+      "group": "Backend",
+      "items": [
+        "Node.js",
+        "Express",
+        "FastAPI",
+        "Flask",
+        "REST APIs",
+        "WebSockets"
+      ]
+    },
+    {
+      "group": "Mobile",
+      "items": [
+        "Flutter",
+        "Dart",
+        "Firebase",
+        "Android"
+      ]
+    },
+    {
+      "group": "Data & AI",
+      "items": [
+        "PostgreSQL",
+        "MongoDB",
+        "SQLite",
+        "RAG",
+        "Google Gemini",
+        "pgvector"
+      ]
+    },
+    {
+      "group": "Platform",
+      "items": [
+        "Better Auth",
+        "RBAC",
+        "Multi-tenancy",
+        "Stripe"
+      ]
+    },
+    {
+      "group": "DevOps",
+      "items": [
+        "Docker",
+        "GitHub Actions",
+        "Terraform",
+        "AWS",
+        "Nginx",
+        "Vercel"
+      ]
+    }
+  ]
+}

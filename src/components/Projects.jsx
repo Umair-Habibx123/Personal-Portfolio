@@ -1,174 +1,173 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { SectionWrapper } from "../hoc";
-import { styles } from "../styles";
-import { github, pineapple, pineappleHover } from "../assets";
-import { projects } from "../constants";
-import { fadeIn, textVariant, staggerContainer } from "../utils/motion";
+import { forwardRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Github, Download, Plus } from 'lucide-react';
+import site, { img, srcSet } from '../lib/site';
+import { Aurora, Heading, Reveal, trackPointer } from './ui';
 
-const ProjectCard = ({
-  id,
-  name,
-  description,
-  image,
-  repo,
-  demo,
-  index,
-  active,
-  handleClick,
-}) => {
+/** The original pineapple "LIVE DEMO" button. */
+function LiveButton({ href, name }) {
+  const [hover, setHover] = useState(false);
   return (
-    <div
-      className={`relative 
-    ${active === id ? "lg:col-span-2 lg:row-span-1" : "col-span-1"} 
-    flex items-center justify-center cursor-pointer card-shadow 
-    h-[260px] sm:h-[320px] md:h-[380px] lg:h-[420px] 
-    transition-all duration-300`}
-      onClick={() => handleClick(id)}
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Live demo: ${name}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
+      className="btn border border-white/20 bg-night/70 !px-3 !py-2.5 text-timberWolf backdrop-blur hover:border-transparent hover:bg-accent hover:text-white"
     >
-      <div
-        className="absolute top-0 left-0 z-10 bg-jetLight 
-    h-full w-full opacity-[0.5] rounded-[24px]"
-      ></div>
-
-      <img
-        src={image}
-        alt={name}
-        className="absolute w-full h-full object-cover rounded-[24px]"
-      />
-
-      {active !== id ? (
-        <div className="flex items-center justify-start pr-[4.5rem]">
-          <h3
-            className="font-extrabold font-beckman uppercase w-[200px] h-[30px] 
-    whitespace-nowrap sm:text-[27px] text-[16px] text-timberWolf tracking-[1px]
-    absolute lg:bottom-[7rem] lg:rotate-[-90deg] lg:origin-[0,0]
-    leading-none z-20"
-          >
-            {name}
-          </h3>
-        </div>
-      ) : (
-        <>
-          <div
-            className="absolute bottom-0 p-6 sm:p-8 justify-start w-full 
-        flex-col bg-[rgba(122,122,122,0.5)] rounded-b-[24px] z-20"
-          >
-            <div className="absolute inset-0 flex justify-end m-3">
-              <div
-                onClick={() => window.open(repo, "_blank")}
-                className="bg-night sm:w-11 sm:h-11 w-9 h-9 rounded-full 
-              flex justify-center items-center cursor-pointer
-              sm:opacity-[0.9] opacity-[0.8]"
-              >
-                <img
-                  src={github}
-                  alt="source code"
-                  className="w-4/5 h-4/5 object-contain"
-                />
-              </div>
-            </div>
-
-            <h2
-              className="font-bold sm:text-[32px] text-[20px] 
-          text-timberWolf uppercase font-beckman sm:mt-0 -mt-[1rem]"
-            >
-              {name}
-            </h2>
-            <p
-              className="text-silver sm:text-[14px] text-[12px] 
-          max-w-3xl sm:leading-[24px] leading-[20px]
-          font-poppins tracking-[1px] break-words"
-            >
-              {description}
-            </p>
-            <button
-              className="live-demo flex justify-between 
-          sm:text-[16px] text-[14px] text-timberWolf 
-          font-bold font-beckman items-center py-4 px-3 
-          whitespace-nowrap gap-1 sm:w-[138px] sm:h-[50px] 
-          w-[120px] h-[46px] rounded-[10px] glassmorphism 
-          sm:mt-[22px] mt-[16px] hover:bg-battleGray 
-          hover:text-eerieBlack transition duration-[0.2s] 
-          ease-in-out"
-              onClick={() => window.open(demo, "_blank")}
-              onMouseOver={() => {
-                document
-                  .querySelector(".btn-icon")
-                  .setAttribute("src", pineappleHover);
-              }}
-              onMouseOut={() => {
-                document
-                  .querySelector(".btn-icon")
-                  .setAttribute("src", pineapple);
-              }}
-            >
-              <img
-                src={pineapple}
-                alt="pineapple"
-                className="btn-icon sm:w-[34px] sm:h-[34px] 
-              w-[28px] h-[28px] object-contain"
-              />
-              LIVE DEMO
-            </button>
-          </div>
-        </>
-      )}
-    </div>
+      <img src={img(hover ? 'icons/pineappleHover.webp' : 'icons/pineapple.webp')} alt="" width="28" height="28" className="h-7 w-7 object-contain" />
+      LIVE DEMO
+    </a>
   );
-};
+}
 
-const Projects = () => {
-  const [active, setActive] = useState("project-2");
+const ProjectCard = forwardRef(function ProjectCard({ project, active, onOpen }, ref) {
+  const { links = {} } = project;
+  return (
+    <motion.article
+      ref={ref}
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={trackPointer}
+      className={`spotlight group relative overflow-hidden rounded-[24px] shadow-card ${active ? 'min-h-[480px]' : 'h-[300px]'} sm:h-[460px] sm:min-h-0 ${
+        active ? 'sm:col-span-2 ring-2 ring-pink-500/70' : 'col-span-1'
+      }`}
+    >
+      <img
+        src={img(project.image)}
+        srcSet={srcSet(project.image)}
+        sizes={active ? '(min-width: 640px) 50vw, 100vw' : '(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'}
+        alt={`${project.name} preview`}
+        loading="lazy"
+        decoding="async"
+        className={`absolute inset-0 h-full w-full object-cover transition duration-700 ${active ? 'scale-100' : 'scale-110 grayscale-[60%] group-hover:grayscale-0'}`}
+      />
+      <div className={`absolute inset-0 transition duration-500 ${active ? 'bg-gradient-to-t from-night from-[38%] via-night/75 to-night/5' : 'bg-night/40 group-hover:bg-night/15'}`} />
+
+      {!active ? (
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-label={`Open ${project.name}`}
+          className="absolute inset-0 z-20 flex h-full w-full items-center justify-center text-left"
+        >
+          <h3 className="px-6 text-center font-beckman text-[22px] font-extrabold uppercase tracking-[1px] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.85)] sm:text-[26px] lg:absolute lg:bottom-6 lg:left-[3.4rem] lg:origin-bottom-left lg:-rotate-90 lg:whitespace-nowrap lg:px-0 lg:text-left lg:text-[21px]">
+            {project.name}
+          </h3>
+          <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-night/70 text-white transition group-hover:rotate-90 group-hover:bg-accent">
+            <Plus size={18} aria-hidden="true" />
+          </span>
+          {project.featured && (
+            <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-white">Featured</span>
+          )}
+        </button>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="absolute inset-x-0 bottom-0 z-20 p-6 sm:p-8"
+        >
+          {links.github && (
+            <a
+              href={links.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Source code: ${project.name}`}
+              className="absolute right-5 top-[-3.5rem] grid h-11 w-11 place-items-center rounded-full bg-night/90 text-white transition hover:bg-accent sm:right-6"
+            >
+              <Github size={20} />
+            </a>
+          )}
+          <p className="font-mono text-[11px] uppercase tracking-widest text-pink-300">{project.category.join(' · ')}</p>
+          <h3 className="mt-1 font-beckman text-[24px] font-bold uppercase text-timberWolf sm:text-[32px]">{project.name}</h3>
+          <p className="mt-2 max-w-3xl font-poppins text-[13px] leading-[22px] tracking-[0.5px] text-silver sm:text-[14px] sm:leading-[24px]">{project.summary}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {project.tags.map((t) => (
+              <span key={t} className="chip border-white/15 bg-white/10 text-white">
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {links.live && <LiveButton href={links.live} name={project.name} />}
+            {links.apk && (
+              <a href={links.apk} target="_blank" rel="noreferrer" className="btn-accent !px-4 !py-2.5" aria-label={`Download APK: ${project.name}`}>
+                <Download size={16} aria-hidden="true" /> DOWNLOAD APK
+              </a>
+            )}
+            {links.github && (
+              <a href={links.github} target="_blank" rel="noreferrer" className="btn-glass !px-4 !py-2.5">
+                <Github size={16} aria-hidden="true" /> CODE
+              </a>
+            )}
+          </div>
+        </motion.div>
+      )}
+    </motion.article>
+  );
+});
+
+export default function Projects() {
+  const { projects: section } = site;
+  const projects = section.items;
+  const projectFilters = section.filters;
+  const [filter, setFilter] = useState('All');
+  const shown = projects.filter((p) => filter === 'All' || p.category.includes(filter));
+  const [activeName, setActiveName] = useState(projects[0]?.name);
+  const active = shown.some((p) => p.name === activeName) ? activeName : shown[0]?.name;
 
   return (
-    <div className="-mt-[6rem]">
-      <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText} `}>Case Studies</p>
-        <h2 className={`${styles.sectionHeadTextLight}`}>Projects.</h2>
-      </motion.div>
+    <section id="projects" className="relative overflow-hidden bg-night py-24 sm:py-32">
+      <Aurora section="projects" />
+      <div className="container-x relative">
+        <Heading eyebrow={section.eyebrow} title={section.title} dark />
+        <Reveal>
+          <p className="mt-4 max-w-3xl text-[18px] leading-[30px] text-taupe">{section.intro}</p>
+        </Reveal>
 
-      <div className="w-full flex">
-        <motion.p
-          variants={fadeIn("", "", 0.1, 1)}
-          className="mt-4 text-taupe text-[18px] max-w-3xl leading-[30px]"
-        >
-          These projects demonstrate my expertise with practical examples of
-          some of my work, including brief descriptions and links to code
-          repositories and live demos. They showcase my ability to tackle
-          intricate challenges, adapt to various technologies, and efficiently
-          oversee projects.
-        </motion.p>
-      </div>
-
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0.25 }}
-        className={`${styles.innerWidth} mx-auto flex flex-col`}
-      >
-        <div
-          className="mt-[50px] grid gap-5
-      grid-cols-1 
-      sm:grid-cols-2 
-      lg:grid-cols-3 
-      xl:grid-cols-4
-      auto-rows-[minmax(320px,auto)]"
-        >
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              index={index}
-              {...project}
-              active={active}
-              handleClick={setActive}
-            />
-          ))}
+        <div role="tablist" aria-label="Filter projects" className="glass-dark mt-10 inline-flex flex-wrap gap-1 rounded-full p-1">
+          {projectFilters.map((f) => {
+            const count = f === 'All' ? projects.length : projects.filter((p) => p.category.includes(f)).length;
+            return (
+              <button
+                key={f}
+                role="tab"
+                aria-selected={filter === f}
+                onClick={() => setFilter(f)}
+                className={`relative rounded-full px-5 py-2 font-beckman text-sm uppercase tracking-[1px] transition ${filter === f ? 'text-white' : 'text-taupe hover:text-white'}`}
+              >
+                {filter === f && (
+                  <motion.span layoutId="filter-pill" className="absolute inset-0 -z-10 rounded-full bg-accent" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
+                )}
+                {f} <span className="ml-1 font-mono text-[11px] opacity-60">{count}</span>
+              </button>
+            );
+          })}
         </div>
-      </motion.div>
-    </div>
-  );
-};
 
-export default SectionWrapper(Projects, "projects");
+        <motion.div layout className="mt-10 grid grid-flow-dense auto-rows-auto grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <AnimatePresence mode="popLayout">
+            {shown.map((p) => (
+              <ProjectCard key={p.name} project={p} active={p.name === active} onOpen={() => setActiveName(p.name)} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        <p className="mt-12 text-center text-taupe">
+          More on{' '}
+          <a href={site.links.github} target="_blank" rel="noreferrer" className="font-semibold text-white underline decoration-pink-500 decoration-2 underline-offset-4 hover:text-pink-300">
+            GitHub
+          </a>
+        </p>
+      </div>
+    </section>
+  );
+}

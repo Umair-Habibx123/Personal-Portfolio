@@ -1,0 +1,22 @@
+{
+  "company": "AIMS Soft",
+  "logo": "logos/aimssoft.webp",
+  "location": "Islamabad · On-site",
+  "roles": [
+    {
+      "title": "Frontend Developer Intern",
+      "type": "Internship",
+      "period": "Jan 2025 – May 2025",
+      "points": [
+        "Built Angular modules for a school-management ERP and the admissions system of the Pakistan Education Portal, working against a .NET backend.",
+        "Built the Pakistan Youth Portal's front end in Angular."
+      ],
+      "tags": [
+        "Angular",
+        "TypeScript",
+        "Bootstrap",
+        "Tailwind CSS"
+      ]
+    }
+  ]
+}

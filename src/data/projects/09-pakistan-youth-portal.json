@@ -1,0 +1,16 @@
+{
+  "name": "Pakistan Youth Portal",
+  "category": [
+    "Web"
+  ],
+  "image": "projects/pakistan-youth-portal.webp",
+  "summary": "Youth career portal with jobs, trainings and blogs, plus user and admin dashboards. Built at AIMS Soft.",
+  "tags": [
+    "Angular",
+    "Tailwind CSS"
+  ],
+  "links": {
+    "live": "https://pakistanyouthportal.com",
+    "github": "https://github.com/Umair-Habibx123/pakistan-youth-portal"
+  }
+}

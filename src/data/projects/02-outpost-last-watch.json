@@ -1,0 +1,19 @@
+{
+  "name": "Outpost: Last Watch",
+  "category": [
+    "Web"
+  ],
+  "featured": true,
+  "image": "projects/outpost.webp",
+  "summary": "Browser wave-survival game built for GalvanAI's Mango Mania event. Play solo, or with a friend using their phone as the controller.",
+  "tags": [
+    "Node.js",
+    "Socket.IO",
+    "WebRTC",
+    "PostgreSQL"
+  ],
+  "links": {
+    "live": "https://outpost-last-watch.vercel.app",
+    "github": "https://github.com/Umair-Habibx123/outpost-last-watch-mango-mania-season-1"
+  }
+}

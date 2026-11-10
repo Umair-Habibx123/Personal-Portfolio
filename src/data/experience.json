@@ -1,0 +1,12 @@
+{
+  "eyebrow": "What I've done so far",
+  "title": "Work Experience.",
+  "education": {
+    "school": "National University of Modern Languages (NUML)",
+    "logo": "logos/numl.webp",
+    "degree": "BS Software Engineering",
+    "period": "2021 – 2025",
+    "grade": "CGPA 3.6 / 4.0",
+    "note": "Final-year project: Collaborative Edge."
+  }
+}

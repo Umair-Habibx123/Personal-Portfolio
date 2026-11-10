@@ -1,0 +1,17 @@
+{
+  "name": "EC3 Store",
+  "category": [
+    "Web"
+  ],
+  "image": "projects/ec3-store.webp",
+  "summary": "E-commerce store with Firebase auth, Stripe checkout with server-side pricing, cash on delivery and an admin dashboard.",
+  "tags": [
+    "React",
+    "Firebase",
+    "Stripe"
+  ],
+  "links": {
+    "live": "https://ec3store.vercel.app",
+    "github": "https://github.com/Umair-Habibx123/ec3-store"
+  }
+}

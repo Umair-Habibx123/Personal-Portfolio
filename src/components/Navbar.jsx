@@ -1,138 +1,129 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { styles } from "../styles";
-import { navLinks } from "../constants";
-import { close, menu, logo, logotext } from "../assets";
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import site, { img } from '../lib/site';
+import { ResumeLink } from './ui';
 
-const Navbar = () => {
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
+  const lastY = useRef(0);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
-  const handleCloseNavbar = () => setToggle(false);
+  // Original behaviour: hide when scrolling down, show when scrolling up
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setHidden(y > lastY.current && y > 200);
+      setScrolled(y > 20);
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    site.nav.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
-      // Show/hide navbar based on scroll direction
-      if (currentScrollY > lastScrollY) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
-      }
-
-      // Close hamburger menu on mobile devices if open
-      if (toggle) {
-        setToggle(false);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY, toggle]);
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    const onKey = (e) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
-    <nav
-      className={`${styles.paddingX} w-full flex items-center py-2 fixed
-    top-0 z-20 bg-flashWhite sm:opacity-[0.97] xxs:h-[12vh] ${
-      showNavbar ? "sm:translate-y-0" : "-translate-y-full"
-    } transition-transform`}
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}
     >
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        <Link
-          to="/"
-          className="flex items-center gap-2"
-          onClick={() => {
-            setActive("");
-            window.scrollTo(0, 0);
-          }}
-        >
-          <img
-            src={logo}
-            alt="logo"
-            className="sm:w-[50px] sm:h-[50px] w-[45px] h-[45px] object-contain"
-          />
-          <img
-            src={logotext}
-            alt="logo"
-            className="sm:w-[90px] sm:h-[90px] w-[85px] h-[85px] -ml-[0.6rem] object-contain"
-          />
-        </Link>
-
-        {/* Desktop Navbar Links */}
-        <ul className="list-none hidden sm:flex flex-row gap-14 mt-2">
-          {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className={`${
-                active === nav.title ? "text-french" : "text-eerieBlack"
-              } hover:text-taupe text-[21px] font-medium font-mova 
-                uppercase tracking-[3px] cursor-pointer nav-links`}
-              onClick={() => setActive(nav.title)}
-            >
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile Navbar */}
-        {toggle && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-25 z-40"
-            onClick={handleCloseNavbar}
-          ></div>
-        )}
-        <div className="sm:hidden flex flex-1 justify-end items-center">
-          {toggle ? (
-            <div
-              className={`fixed top-0 right-0 w-3/4 max-w-[300px] h-[35%] bg-flashWhite 
-                shadow-lg z-50 rounded-l-lg p-6 menu transition-transform duration-300`}
-            >
-              {/* Close Button */}
-              <div className="flex justify-end">
-                <img
-                  src={close}
-                  alt="close"
-                  className="w-[22px] h-[22px] object-contain cursor-pointer"
-                  onClick={handleCloseNavbar}
-                />
-              </div>
-              {/* Navbar Links */}
-              <ul className="list-none flex flex-col gap-4 mt-8">
-                {navLinks.map((nav) => (
-                  <li
-                    key={nav.id}
-                    className={`${
-                      active === nav.title ? "text-french" : "text-eerieBlack"
-                    } hover:text-taupe text-[16px] font-medium uppercase font-mova tracking-wide transition-colors cursor-pointer`}
-                    onClick={() => {
-                      setActive(nav.title);
-                      handleCloseNavbar();
-                    }}
-                  >
-                    <a href={`#${nav.id}`}>{nav.title}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <img
-              src={menu}
-              alt="menu"
-              className="w-[30px] h-[30px] object-contain cursor-pointer"
-              onClick={() => setToggle(true)}
-            />
-          )}
-        </div>
+      <div className="absolute inset-x-0 top-0 z-10 h-[3px] overflow-hidden">
+        <motion.div className="h-full origin-left bg-accent" style={{ scaleX: progress }} />
       </div>
-    </nav>
-  );
-};
+      <nav
+        aria-label="Main"
+        className={`transition-all duration-500 ${scrolled ? 'bg-flashWhite/85 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-xl' : 'bg-flashWhite/0'}`}
+      >
+        <div className="container-x flex h-20 items-center justify-between">
+          <a href="#top" className="flex items-center" aria-label={`${site.profile.name}, back to top`}>
+            <img src={img('brand/logo-black.webp')} alt="" className="h-[46px] w-[46px] object-contain" />
+            <img src={img('brand/logo-text-black.webp')} alt={site.profile.shortName} className="-ml-2 h-[84px] w-[84px] object-contain" />
+          </a>
 
-export default Navbar;
+          <ul className="hidden items-center gap-8 lg:flex xl:gap-10">
+            {site.nav.map(({ id, label }) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  className={`group relative font-mova text-[18px] uppercase tracking-[3px] transition ${
+                    active === id ? 'text-eerieBlack' : 'text-jetGray hover:text-eerieBlack'
+                  }`}
+                >
+                  {label}
+                  <span
+                    className={`absolute -bottom-1.5 left-1/2 h-[3px] -translate-x-1/2 rounded-full bg-accent transition-all duration-500 ${
+                      active === id ? 'w-[70%]' : 'w-0 group-hover:w-[70%]'
+                    }`}
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <ResumeLink className="btn-accent hidden !px-5 !py-2.5 sm:inline-flex">RESUME</ResumeLink>
+            <button
+              type="button"
+              className="grid h-11 w-11 place-items-center rounded-xl bg-eerieBlack text-white lg:hidden"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            className="fixed inset-0 -z-10 flex flex-col justify-center bg-flashWhite/95 px-8 backdrop-blur-2xl lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <ul className="space-y-3">
+              {site.nav.map(({ id, label }, i) => (
+                <motion.li key={id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 * i }}>
+                  <a
+                    href={`#${id}`}
+                    onClick={() => setOpen(false)}
+                    className="flex items-baseline gap-4 py-1 font-mova text-4xl uppercase tracking-[3px] text-eerieBlack"
+                  >
+                    <span className="font-mono text-sm text-pink-500">0{i + 1}</span>
+                    {label}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+            <ResumeLink className="btn-accent mt-10 self-start">RESUME</ResumeLink>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}

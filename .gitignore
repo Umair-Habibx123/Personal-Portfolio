@@ -25,3 +25,8 @@ yarn-error.log*
 
 .env
 .package-lock.json
+# local contact-message database (npm run messages:sync)
+data/*.db
+data/*.db-*
+/dist
+/.ssr

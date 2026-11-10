@@ -1,103 +1,149 @@
-import { motion } from "framer-motion";
-import { styles } from "../styles";
-import { umair, bwmap, worldmap } from "../assets";
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Github, Linkedin, Mail } from 'lucide-react';
+import site, { img, srcSet } from '../lib/site';
 
-const Hero = () => {
+const ease = [0.22, 1, 0.36, 1];
+
+function RotatingWord({ words }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((n) => (n + 1) % words.length), 2600);
+    return () => clearInterval(t);
+  }, [words.length]);
+  const longest = words.reduce((a, b) => (b.length > a.length ? b : a));
   return (
-    <>
-      <div className="absolute top-0 left-0 z-0 h-[100vh] w-screen">
-        <img
-          src={bwmap}
-          alt="world map"
-          className="w-full h-full sm:block hidden object-cover"
-        />
-      </div>
-      <div className="absolute top-0 left-0 z-0 h-[100vh] w-screen">
-        <img
-          src={worldmap}
-          alt="world map"
-          className="w-full h-full sm:hidden block object-cover"
-        />
-      </div>
-      <section
-        className="relative flex sm:flex-row flex-col w-full h-screen mx-auto 
-        sm:bg-hero bg-hero-mobile overflow-hidden"
-      >
-        <div
-          className={`absolute inset-0 sm:top-[250px] top-[150px] 
-          lg:top-[150px] xl:top-[250px] ${styles.paddingX} 
-          max-w-7xl mx-auto flex flex-row items-start
-          justify-between gap-3`}
+    <span className="relative inline-grid overflow-hidden leading-[1.3]">
+      <span className="invisible col-start-1 row-start-1 whitespace-nowrap">{longest}</span>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={words[i]}
+          className="text-gradient col-start-1 row-start-1 whitespace-nowrap"
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: '0%', opacity: 1 }}
+          exit={{ y: '-100%', opacity: 0 }}
+          transition={{ duration: 0.6, ease }}
         >
-          <div className="flex flex-col justify-center items-center mt-5 ml-3">
-            <div className="w-5 h-5 rounded-full bg-[#0a0a0a] sm:hidden" />
-            <div className="w-1 sm:h-80 h-40 bw-gradient sm:hidden" />
-          </div>
-
-          <div>
-            <h1
-              className={`${styles.heroHeadText} text-eerieBlack font-poppins uppercase`}
-            >
-              Hi, I'm{" "}
-              <span
-                className="sm:text-battleGray sm:text-[90px] 
-                text-eerieBlack text-[50px] font-mova
-                font-extrabold uppercase"
-              >
-                Umair
-              </span>
-            </h1>
-            <p className={`${styles.heroSubText} mt-2 text-eerieBlack`}>
-              Dedicated, Smart Worker, and results-driven Software Engineer
-              <br className="sm:block hidden" />
-            </p>
-          </div>
-          <div
-            className="w-screen flex flex-col items-start 
-            justify-center sm:-ml-[3rem] xxs:mt-4"
-          ></div>
-
-          <div></div>
-        </div>
-
-        <div
-          className="absolute xs:bottom-10 bottom-32 w-full 
-          flex justify-center items-center"
-        >
-          <a href="#about">
-            <div
-              className="w-[35px] h-[64px] rounded-3xl border-4 border-dim flex
-            justify-center items-start p-2"
-            >
-              <motion.div
-                animate={{
-                  y: [0, 24, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                }}
-                className="w-3 h-3 rounded-full bg-taupe mb-1"
-              />
-            </div>
-          </a>
-        </div>
-
-        {/* Your image comes here. Feel free to remove image if you don't plan to have one.*/}
-        <div>
-          <img
-            className="absolute bottom-0 ml-[50vw] 
-            lg:ml-[75vw] md:ml-[60vw] xmd:ml-[60vw] 2xl:ml-[83vw]
-            sm:h-[90vh] md:h-[70vh] xl:h-[80vh]"
-            src={umair}
-            alt="umair"
-            onContextMenu={(e) => e.preventDefault()} // Prevent right-click
-          />
-        </div>
-      </section>
-    </>
+          {words[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
-};
+}
 
-export default Hero;
+const socials = [
+  { href: site.links.github, label: 'GitHub', Icon: Github },
+  { href: site.links.linkedin, label: 'LinkedIn', Icon: Linkedin },
+  { href: `mailto:${site.links.email}`, label: 'Email', Icon: Mail },
+];
+
+// The hero's entrance runs in CSS (see .hero-in in index.css), so it plays from
+// the pre-rendered HTML before any JavaScript has loaded.
+const delay = (s) => ({ animationDelay: `${s}s` });
+
+export default function Hero() {
+  const { profile, stats } = site;
+
+  return (
+    <section id="top" className="relative flex min-h-[max(36rem,calc(100svh-var(--marquee-h)))] flex-col overflow-hidden">
+      {/* Original backdrop: black-and-white world map under a diagonal light/dark split */}
+      {/* <picture> so only ONE map downloads: the light one on phones, the b/w one from 640px */}
+      <picture>
+        <source media="(min-width: 640px)" srcSet={srcSet('backgrounds/bw-map.webp')} sizes="min(100vw, 1280px)" />
+        <img src={img('backgrounds/world-map.webp')} alt="" aria-hidden="true" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+      </picture>
+      <div className="hero-split absolute inset-0" />
+      {/* New: colour glow on the dark side */}
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[70vmin] w-[70vmin] animate-aurora rounded-full bg-pink-500/30 blur-[120px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute right-[15%] top-[20%] h-[45vmin] w-[45vmin] animate-aurora rounded-full bg-violet-600/30 blur-[120px]" style={{ animationDelay: '-10s' }} />
+
+      <div className="container-x relative z-10 flex flex-1 items-start gap-4 pb-36 pt-24 sm:items-center sm:pb-10 sm:pt-24 lg:[@media(max-height:760px)]:pb-5 lg:[@media(max-height:760px)]:pt-20">
+        {/* Original mobile decoration: dot and fading line */}
+        <div className="mt-4 flex flex-col items-center sm:hidden" aria-hidden="true">
+          <div className="h-5 w-5 rounded-full bg-accent" />
+          <div className="bw-gradient h-40 w-1" />
+        </div>
+
+        <div className="max-w-2xl">
+          <h1 className="font-poppins font-black uppercase leading-[0.95] text-eerieBlack">
+            <span style={delay(0.1)} className="hero-in block text-[40px] xs:text-[50px] sm:text-[60px] lg:text-[80px] lg:[@media(max-height:860px)]:text-[64px] lg:[@media(max-height:760px)]:text-[52px]">
+              {profile.greeting}
+            </span>
+            <span className="block overflow-hidden">
+              <span
+                style={delay(0.2)}
+                className="hero-rise text-gradient block font-mova text-[64px] font-extrabold leading-[1.05] xs:text-[80px] sm:text-[110px] lg:text-[140px] lg:[@media(max-height:860px)]:text-[112px] lg:[@media(max-height:760px)]:text-[92px]"
+              >
+                {profile.shortName}
+              </span>
+            </span>
+          </h1>
+
+          <p style={delay(0.35)} className="hero-in mt-4 flex flex-wrap items-center gap-x-[0.3em] font-poppins text-[20px] font-semibold leading-[1.3] text-eerieBlack sm:text-[28px] lg:text-[32px] lg:[@media(max-height:760px)]:text-[26px]">
+            <span>I build</span>
+            <RotatingWord words={profile.rotatingWords} />
+          </p>
+
+          <p style={delay(0.45)} className="hero-in mt-4 max-w-xl text-[16px] leading-relaxed text-jetLight sm:text-[18px] lg:max-w-[min(36rem,47vw)] lg:[@media(max-height:760px)]:mt-3 lg:[@media(max-height:760px)]:text-[16px] lg:[@media(max-height:760px)]:leading-normal">
+            {profile.intro}
+          </p>
+
+          <div style={delay(0.55)} className="hero-in mt-7 lg:[@media(max-height:760px)]:mt-5 flex flex-wrap items-center gap-3">
+            <a href="#projects" className="btn-accent">
+              SEE MY WORK
+            </a>
+            <a href="#contact" className="btn-dark">
+              GET IN TOUCH
+            </a>
+            <div className="flex items-center gap-1">
+              {socials.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="grid h-11 w-11 place-items-center rounded-full text-jetLight transition hover:bg-eerieBlack hover:text-white"
+                >
+                  <Icon size={19} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <dl style={delay(0.7)} className="hero-in mt-8 lg:[@media(max-height:760px)]:mt-5 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label} className="glass-light rounded-2xl px-4 py-3 shadow-sm lg:[@media(max-height:760px)]:py-2">
+                <dt className="sr-only">{s.label}</dt>
+                <dd className="font-display text-2xl font-extrabold text-eerieBlack sm:text-3xl">{s.value}</dd>
+                <dd className="text-[11px] leading-tight text-jetGray sm:text-xs">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      {/* Original: portrait standing at the bottom right */}
+      <img
+        src={img(profile.photo)}
+        srcSet={srcSet(profile.photo)}
+        sizes="(min-width: 1024px) 45vw, 75vw"
+        alt={`Portrait of ${profile.name}`}
+        width="1114"
+        height="983"
+        fetchpriority="high"
+        decoding="async"
+        onContextMenu={(e) => e.preventDefault()}
+        style={delay(0.25)}
+        className="hero-photo pointer-events-none absolute bottom-0 right-[-10%] z-0 h-[min(30vh,70vw)] w-auto max-w-none select-none drop-shadow-[0_20px_60px_rgba(236,72,153,0.35)] sm:right-[-3%] sm:h-[min(40vh,38vw)] lg:right-[-1%] lg:h-[min(80vh,35vw)] xl:h-[min(80vh,40vw)] 2xl:right-[4%]"
+      />
+
+      {/* Original scroll indicator */}
+      <a href="#about" aria-label="Scroll to About" className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 sm:block lg:hidden">
+        <span className="flex h-[64px] w-[35px] items-start justify-center rounded-3xl border-4 border-dim p-2">
+          <span className="mb-1 h-3 w-3 animate-scroll-dot rounded-full bg-accent" />
+        </span>
+      </a>
+    </section>
+  );
+}

@@ -1,53 +1,38 @@
+import { MotionConfig } from 'framer-motion';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Marquee from './components/Marquee';
+import About from './components/About';
+import Tech from './components/Tech';
+import Projects from './components/Projects';
+import Experience from './components/Experience';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import FloatingButtons from './components/FloatingButtons';
 
-import {
-  About,
-  Contact,
-  Experience,
-  Hero,
-  Navbar,
-  Tech,
-  Projects,
-  Footer,
-} from "./components";
-
-const App = () => {
+// Section order follows the original site: light hero and Overview, dark
+// Technologies and Projects, light Experience, dark Contact, light footer.
+export default function App() {
   return (
-
-    <div className="relative z-0">
-      <div>
-        <Navbar />
-        <Hero />
-      </div>
-
-      <div className="bg-about bg-cover bg-center bg-no-repeat">
-        <About />
-      </div>
-
-      <div className="bg-tech bg-cover bg-center bg-no-repeat pb-10">
-        <Tech />
-      </div>
-
-      <Projects />
-
-      <div
-        className="bg-experience bg-cover bg-center bg-no-repeat 
-            rounded-tl-[150px] rounded-br-[150px]"
+    <MotionConfig reducedMotion="user">
+      <a
+        href="#about"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-eerieBlack focus:px-4 focus:py-2 focus:text-white"
       >
-        <div
-          className="bg-experienceLight bg-cover bg-center 
-            bg-no-repeat rounded-tl-[150px] rounded-br-[130px]"
-        >
-          <Experience />
-        </div>
-      </div>
-      <div className="relative z-0">
+        Skip to content
+      </a>
+      <Navbar />
+      <main>
+        <Hero />
+        <Marquee />
+        <About />
+        <Tech />
+        <Projects />
+        <Experience />
         <Contact />
-      </div>
-      <div className="bg-about bg-cover bg-center bg-no-repeat">
-        <Footer />
-      </div>
-    </div>
+      </main>
+      <Footer />
+      <FloatingButtons />
+    </MotionConfig>
   );
-};
-
-export default App;
+}

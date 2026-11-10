@@ -1,0 +1,27 @@
+{
+  "eyebrow": "Introduction",
+  "title": "Overview.",
+  "tagline": "From the schema to the screen",
+  "paragraphs": [
+    "I'm a software engineer from Islamabad. At GalvanAI I joined on contract in November 2025 and moved to a full-time role in February 2026. Today I build multi-tenant SaaS platforms end to end.",
+    "Outside work I ship complete apps, not demos: each one has CI, versioned releases and documentation on GitHub. I care about software that's secure by design, code the next developer can pick up easily, and finishing what I start."
+  ],
+  "highlights": [
+    {
+      "title": "Full-stack SaaS",
+      "text": "Next.js, FastAPI and PostgreSQL, with auth, roles, organizations and Stripe billing."
+    },
+    {
+      "title": "AI & RAG",
+      "text": "Document chat with cited answers, tenant isolation and bring-your-own-LLM settings."
+    },
+    {
+      "title": "Mobile",
+      "text": "Flutter and Firebase apps for Android, released as signed APKs."
+    },
+    {
+      "title": "Shipping",
+      "text": "Docker, GitHub Actions, Terraform for AWS, Nginx and VPS hosting."
+    }
+  ]
+}

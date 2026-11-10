@@ -1,0 +1,19 @@
+{
+  "name": "Collaborative Edge",
+  "category": [
+    "Web",
+    "AI"
+  ],
+  "image": "projects/collaborative-edge.webp",
+  "summary": "Final-year project: a MERN portal connecting industry, teachers and students around final-year projects, with a Gemini AI assistant.",
+  "tags": [
+    "MongoDB",
+    "Express",
+    "React",
+    "Node.js"
+  ],
+  "links": {
+    "live": "https://collaborative-edge.vercel.app",
+    "github": "https://github.com/Umair-Habibx123/collaborative-edge"
+  }
+}
