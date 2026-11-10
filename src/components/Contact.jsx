@@ -5,9 +5,9 @@ import site from '../lib/site';
 import { Aurora, Heading, Reveal, ResumeLink } from './ui';
 import VerifyStep from './VerifyStep';
 
-const LIMITS = { name: 100, email: 200, subject: 150, message: 5000, company: 200 };
+const LIMITS = { name: 100, email: 200, subject: 150, message: 5000, hpx: 200 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const empty = { name: '', email: '', subject: '', message: '', company: '' };
+const empty = { name: '', email: '', subject: '', message: '', hpx: '' };
 
 function validate(v) {
   const e = {};
@@ -204,8 +204,9 @@ export default function Contact() {
 
                     {/* Honeypot: hidden from people, bots fill it in */}
                     <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-                      <label htmlFor="company">Company</label>
-                      <input id="company" tabIndex={-1} autoComplete="off" value={values.company} onChange={set('company')} />
+                      {/* Named so browser autofill never fills it (a field called "company" got autofilled). */}
+                      <label htmlFor="hpx">Leave this field empty</label>
+                      <input id="hpx" name="hpx" type="text" tabIndex={-1} autoComplete="off" data-lpignore="true" data-1p-ignore value={values.hpx} onChange={set('hpx')} />
                     </div>
 
                     {status === 'failed' && (

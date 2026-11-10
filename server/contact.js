@@ -172,7 +172,10 @@ async function saveToGitHub(record, env) {
 async function start(body, { ip, userAgent, env }) {
   // Bots: answer "ok" so they move on, but send nothing.
   const tooFast = Number(body.startedAt) && Date.now() - Number(body.startedAt) < MIN_FILL_MS;
-  if (body.company || tooFast) return reply(200, { ok: true, step: 'verify', token: null, expiresIn: 600 });
+  if (body.hpx || tooFast) {
+    console.warn(`[contact] dropped as a bot (${body.hpx ? 'hidden field filled' : 'sent too fast'})`);
+    return reply(200, { ok: true, step: 'verify', token: null, expiresIn: 600 });
+  }
 
   if (limited(`start:${ip}`, LIMIT.start)) return reply(429, { ok: false, error: 'Too many messages. Please try again in a few minutes.' });
   const { msg, error } = validate(body);
