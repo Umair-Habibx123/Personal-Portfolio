@@ -57,7 +57,7 @@ export default function Hero() {
       <div aria-hidden="true" className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[70vmin] w-[70vmin] animate-aurora rounded-full bg-pink-500/30 blur-[120px]" />
       <div aria-hidden="true" className="pointer-events-none absolute right-[15%] top-[20%] h-[45vmin] w-[45vmin] animate-aurora rounded-full bg-violet-600/30 blur-[120px]" style={{ animationDelay: '-10s' }} />
 
-      <div className="container-x relative z-10 flex flex-1 items-start gap-4 pb-36 pt-24 sm:items-center sm:pb-10 sm:pt-24 lg:[@media(max-height:760px)]:pb-5 lg:[@media(max-height:760px)]:pt-20">
+      <div className="container-x relative z-10 flex flex-1 items-start gap-4 pb-6 pt-24 sm:items-center sm:pb-10 sm:pt-24 lg:[@media(max-height:760px)]:pb-5 lg:[@media(max-height:760px)]:pt-20">
         {/* Original mobile decoration: dot and fading line */}
         <div className="mt-4 flex flex-col items-center sm:hidden" aria-hidden="true">
           <div className="h-5 w-5 rounded-full bg-accent" />
@@ -113,7 +113,7 @@ export default function Hero() {
 
           <dl style={delay(0.7)} className="hero-in mt-8 lg:[@media(max-height:760px)]:mt-5 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-4">
             {stats.map((s) => (
-              <div key={s.label} className="glass-light rounded-2xl px-4 py-3 shadow-sm lg:[@media(max-height:760px)]:py-2">
+              <div key={s.label} className="rounded-2xl border border-black/5 bg-white px-4 py-3 shadow-sm sm:bg-white/70 sm:backdrop-blur-xl lg:[@media(max-height:760px)]:py-2">
                 <dt className="sr-only">{s.label}</dt>
                 <dd className="font-display text-2xl font-extrabold text-eerieBlack sm:text-3xl">{s.value}</dd>
                 <dd className="text-[11px] leading-tight text-jetGray sm:text-xs">{s.label}</dd>
@@ -135,7 +135,7 @@ export default function Hero() {
         decoding="async"
         onContextMenu={(e) => e.preventDefault()}
         style={delay(0.25)}
-        className="hero-photo pointer-events-none absolute bottom-0 right-[-10%] z-0 h-[min(30vh,70vw)] w-auto max-w-none select-none drop-shadow-[0_20px_60px_rgba(236,72,153,0.35)] sm:right-[-3%] sm:h-[min(40vh,38vw)] lg:right-[-1%] lg:h-[min(80vh,35vw)] xl:h-[min(80vh,40vw)] 2xl:right-[4%]"
+        className="hero-photo pointer-events-none relative z-0 mx-auto -mt-2 block h-auto w-[88%] max-w-[420px] select-none sm:absolute sm:bottom-0 sm:mx-0 sm:mt-0 sm:w-auto sm:max-w-none drop-shadow-[0_20px_60px_rgba(236,72,153,0.35)] sm:right-[-3%] sm:h-[min(40vh,38vw)] lg:right-[-1%] lg:h-[min(80vh,35vw)] xl:h-[min(80vh,40vw)] 2xl:right-[4%]"
       />
 
       {/* Original scroll indicator */}
