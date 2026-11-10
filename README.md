@@ -62,7 +62,6 @@ The site is built to load fast on a free plan:
 - **Split, cached JavaScript:** React and the animation library are separate files that stay cached across deploys. three.js (the 3D balls) and the shader library load only when their sections come near the screen. The 3D balls load on desktop only and share one canvas, which pauses off screen.
 - **Images:** all WebP. Phones download the `@640` copies. Below-the-fold images load lazily, and the hero downloads one world map, not both.
 - **Fonts:** self-hosted. The original display fonts are trimmed to Latin characters and converted to WOFF2 (164 KB → 34 KB).
-- **Ads:** AdSense loads only after the page has finished loading and gone idle.
 - **Caching:** everything in `/assets` is cached for a year (file names change when the content does).
 
 ## Project structure

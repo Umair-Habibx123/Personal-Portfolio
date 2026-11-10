@@ -35,21 +35,6 @@
         "sameAs": %SAME_AS%
       }
     </script>
-
-    <!-- AdSense (~700 KB of scripts) loads only after the page has loaded and gone idle,
-         so it never slows down the first view. -->
-    <script>
-      addEventListener('load', function () {
-        var go = function () {
-          var s = document.createElement('script');
-          s.async = true;
-          s.crossOrigin = 'anonymous';
-          s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2359801234765649';
-          document.head.appendChild(s);
-        };
-        setTimeout(function () { (window.requestIdleCallback || setTimeout)(go, { timeout: 4000 }); }, 2500);
-      });
-    </script>
   </head>
   <body>
     <noscript>This site needs JavaScript. You can reach me on LinkedIn or by email instead.</noscript>
