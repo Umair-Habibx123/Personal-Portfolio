@@ -27,12 +27,12 @@ Shaders load only when a dark section comes near the screen, render at low resol
 
 ## Contact form
 
-`POST /api/contact` (a Vercel function, [`api/contact.js`](api/contact.js)) does two things for every message:
+Messages are only delivered after the sender **confirms their email**, so bots and fake addresses never reach you:
 
-1. **Emails it to you over SMTP** (nodemailer).
-2. **Saves it as its own JSON file in a private GitHub repo**, so nothing is lost if SMTP fails.
+1. The visitor sends the form. `POST /api/contact` ([`api/contact.js`](api/contact.js)) emails **them** a 6-digit code. Nothing is delivered yet.
+2. They type the code. Only then is the message **saved to a private GitHub repo** (one JSON file per message) and **emailed to you**, marked ✓ VERIFIED.
 
-The visitor sees "Message sent" if either step worked. They see an error only if both failed. Spam protection is a hidden field, a minimum fill time and a per-IP rate limit.
+The pending message travels in a signed token, so no database is needed. The token can't be edited, and it expires after 10 minutes. The same message can't be delivered twice. Wrong codes, resends and codes sent to one address are rate-limited. The hidden honeypot field and minimum fill time still stop simple bots before any email is sent. The visitor sees "Message sent" if either the backup or your email worked.
 
 **Setup:** copy `.env.example` to `.env` (the comments there explain every value) and add the same variables in Vercel → Settings → Environment Variables.
 

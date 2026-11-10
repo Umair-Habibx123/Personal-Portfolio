@@ -34,6 +34,10 @@ db.exec(`
   );
   CREATE INDEX IF NOT EXISTS messages_received ON messages (received_at DESC);
 `);
+// added later: was the sender's email confirmed with a code?
+if (!db.prepare('PRAGMA table_info(messages)').all().some((c) => c.name === 'verified')) {
+  db.exec('ALTER TABLE messages ADD COLUMN verified INTEGER NOT NULL DEFAULT 0');
+}
 
 async function gh(path, accept = 'application/vnd.github+json') {
   const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}${path}`, {
@@ -65,8 +69,8 @@ async function sync() {
 
   const insert = db.prepare(`
     INSERT OR IGNORE INTO messages
-      (id, path, received_at, name, email, subject, message, user_agent, smtp_sent, smtp_error, synced_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (id, path, received_at, name, email, subject, message, user_agent, smtp_sent, smtp_error, synced_at, verified)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   let added = 0;
   for (const f of fresh) {
@@ -83,6 +87,7 @@ async function sync() {
       m.smtp?.sent ? 1 : 0,
       m.smtp?.error || null,
       new Date().toISOString(),
+      m.verified ? 1 : 0,
     );
     added++;
   }
@@ -94,13 +99,13 @@ async function sync() {
 
 function list(limit) {
   const rows = db
-    .prepare('SELECT received_at, name, email, subject, message, smtp_sent FROM messages ORDER BY received_at DESC LIMIT ?')
+    .prepare('SELECT received_at, name, email, subject, message, smtp_sent, verified FROM messages ORDER BY received_at DESC LIMIT ?')
     .all(limit);
   if (!rows.length) return console.log('No messages in the local database. Run "npm run messages:sync" first.');
   for (const r of rows) {
     console.log('─'.repeat(70));
     console.log(`${r.received_at}  ${r.smtp_sent ? '✉ emailed' : '⚠ NOT emailed'}`);
-    console.log(`${r.name} <${r.email}>${r.subject ? `  ·  ${r.subject}` : ''}`);
+    console.log(`${r.name} <${r.email}>${r.verified ? ' ✓ verified' : ''}${r.subject ? `  ·  ${r.subject}` : ''}`);
     console.log('');
     console.log(r.message);
   }

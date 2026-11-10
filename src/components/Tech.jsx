@@ -92,7 +92,15 @@ export default function Tech() {
               <div onMouseMove={trackPointer} className="spotlight glass-dark h-full rounded-3xl p-6 transition hover:border-white/25">
                 <h3 className="relative z-10 flex items-center gap-3 font-beckman text-lg font-bold uppercase tracking-[2px] text-timberWolf">
                   <span className="h-[2px] w-6 bg-accent" aria-hidden="true" />
-                  {g.group}
+                  {/* Beckman draws "&" like an 8, so the ampersand uses the body font */}
+                  <span>
+                    {g.group.split('&').map((part, i) => (
+                      <span key={i}>
+                        {i > 0 && <span className="font-sans font-bold">&amp;</span>}
+                        {part}
+                      </span>
+                    ))}
+                  </span>
                 </h3>
                 <ul className="relative z-10 mt-5 flex flex-wrap gap-2">
                   {g.items.map((s) => (

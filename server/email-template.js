@@ -77,7 +77,7 @@ export function renderEmail(record, { siteUrl = 'https://umairhabib.vercel.app',
 
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:22px;border-top:1px solid #ececef;">
                 ${row('From', name)}
-                ${row('Email', `<a href="mailto:${email}" style="color:#7c3aed;text-decoration:none;font-weight:600;">${email}</a>`)}
+                ${row('Email', `<a href="mailto:${email}" style="color:#7c3aed;text-decoration:none;font-weight:600;">${email}</a>${record.verified ? ' <span style="display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;background:#e8f8ef;color:#15803d;font:700 10px/16px ' + FONT + ';letter-spacing:1px;">&#10003; VERIFIED</span>' : ''}`)}
                 ${row('Subject', subject)}
                 ${row('Received', esc(when(record.receivedAt)))}
               </table>
@@ -114,6 +114,58 @@ export function renderEmail(record, { siteUrl = 'https://umairhabib.vercel.app',
             </td>
           </tr>
 
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+/** The 6-digit code sent to the VISITOR. Holds nothing they typed except the code. */
+export function renderCodeEmail({ code, siteUrl = 'https://umairhabib.vercel.app', ownerName = 'Umair' }) {
+  const digits = String(code)
+    .split('')
+    .map(
+      (d) =>
+        `<td style="padding:0 4px;"><div style="width:44px;height:56px;border-radius:12px;background:#f4f4f6;border:1px solid #e6e6e9;text-align:center;font:800 28px/56px ${FONT};color:#1f1f1f;">${esc(d)}</div></td>`,
+    )
+    .join('');
+  const site = esc(siteUrl.replace(/^https?:\/\//, ''));
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Your verification code</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f6;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">Your code is ${esc(code)}. It expires in 10 minutes.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f6;">
+    <tr>
+      <td align="center" style="padding:32px 12px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;border-radius:18px;overflow:hidden;background:#ffffff;box-shadow:0 20px 60px -20px rgba(31,31,31,0.35);">
+          <tr>
+            <td bgcolor="#141414" style="background:#141414;background-image:linear-gradient(135deg,#141414 55%,#2b1055 100%);padding:26px 32px 22px;">
+              <p style="margin:0;font:800 24px/1 ${FONT};letter-spacing:6px;color:#ffffff;">${esc(ownerName.toUpperCase())}</p>
+              <p style="margin:10px 0 0;font:600 11px/1 ${FONT};letter-spacing:2.5px;text-transform:uppercase;color:#d4d4d8;">Confirm your email</p>
+            </td>
+          </tr>
+          <tr><td bgcolor="#ec4899" style="background:#ec4899;background-image:${ACCENT};height:4px;line-height:4px;font-size:0;">&nbsp;</td></tr>
+          <tr>
+            <td style="padding:32px 32px 10px;">
+              <h1 style="margin:0;font:900 22px/1.3 ${FONT};color:#1f1f1f;">Your verification code</h1>
+              <p style="margin:10px 0 24px;font:400 15px/1.6 ${FONT};color:#5b5b5b;">Enter this code on the contact form to send your message. It expires in <strong style="color:#1f1f1f;">10 minutes</strong>.</p>
+              <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto 26px;"><tr>${digits}</tr></table>
+              <p style="margin:0 0 26px;font:400 13px/1.6 ${FONT};color:#9999a1;">Didn't use the contact form on ${site}? You can ignore this email. Nothing will be sent.</p>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#1f1f1f" style="background:#1f1f1f;padding:16px 32px;">
+              <p style="margin:0;font:400 12px/1.6 ${FONT};color:#9999a1;">Sent by the contact form on <a href="${esc(siteUrl)}" style="color:#d4d4d8;text-decoration:none;">${site}</a></p>
+            </td>
+          </tr>
         </table>
       </td>
     </tr>

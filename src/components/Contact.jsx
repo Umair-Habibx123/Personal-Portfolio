@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Check, Loader2, AlertCircle, Github, Linkedin, FileText } from 'lucide-react';
 import site from '../lib/site';
 import { Aurora, Heading, Reveal, ResumeLink } from './ui';
+import VerifyStep from './VerifyStep';
 
 const LIMITS = { name: 100, email: 200, subject: 150, message: 5000, company: 200 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -44,7 +45,8 @@ function Field({ id, label, error, optional, children }) {
 export default function Contact() {
   const [values, setValues] = useState(empty);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
+  const [status, setStatus] = useState('idle'); // idle | sending | verify | sent | failed
+  const [pending, setPending] = useState(null); // { token, email, expiresIn } while waiting for the code
   const [serverError, setServerError] = useState('');
   const [copied, setCopied] = useState(false);
   const startedAt = useRef(Date.now());
@@ -69,12 +71,13 @@ export default function Contact() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, startedAt: startedAt.current }),
+        body: JSON.stringify({ step: 'start', ...values, startedAt: startedAt.current }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong.');
-      setStatus('sent');
-      setValues(empty);
+      // Step 2: the visitor confirms their email with the code we just sent
+      setPending({ token: data.token, email: data.email ?? values.email.trim(), expiresIn: data.expiresIn ?? 600 });
+      setStatus('verify');
     } catch (err) {
       setServerError(err.message);
       setStatus('failed');
@@ -111,7 +114,22 @@ export default function Contact() {
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl bg-jet p-6 shadow-card sm:p-8">
               <AnimatePresence mode="wait">
-                {status === 'sent' ? (
+                {status === 'verify' && pending ? (
+                  <VerifyStep
+                    key="verify"
+                    pending={pending}
+                    onResent={setPending}
+                    onBack={() => {
+                      setPending(null);
+                      setStatus('idle');
+                    }}
+                    onVerified={() => {
+                      setPending(null);
+                      setValues(empty);
+                      setStatus('sent');
+                    }}
+                  />
+                ) : status === 'sent' ? (
                   <motion.div
                     key="sent"
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -203,17 +221,18 @@ export default function Contact() {
                       </p>
                     )}
 
-                    <button type="submit" disabled={status === 'sending'} className="btn-accent self-start !px-8 !py-4 disabled:cursor-wait disabled:opacity-70">
-                      {status === 'sending' ? (
-                        <>
-                          <Loader2 size={18} className="animate-spin" aria-hidden="true" /> SENDING…
-                        </>
-                      ) : (
-                        <>
-                          SEND MESSAGE
-                        </>
-                      )}
-                    </button>
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+                      <button type="submit" disabled={status === 'sending'} className="btn-accent self-start !px-8 !py-4 disabled:cursor-wait disabled:opacity-70">
+                        {status === 'sending' ? (
+                          <>
+                            <Loader2 size={18} className="animate-spin" aria-hidden="true" /> SENDING CODE…
+                          </>
+                        ) : (
+                          'SEND MESSAGE'
+                        )}
+                      </button>
+                      <p className="text-xs leading-relaxed text-taupe">I'll email you a 6-digit code to confirm it's really you.</p>
+                    </div>
                   </motion.form>
                 )}
               </AnimatePresence>
