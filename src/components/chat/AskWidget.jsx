@@ -11,9 +11,11 @@ import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { Atom, CornerDownLeft, FileText, Loader2, Mail, Minimize2, RotateCcw } from 'lucide-react';
 import { ResumeLink } from '../ui';
 import { Actions, newId, parse, Rich, SUGGESTIONS } from './format';
-import { SIZE, loadFrac, saveFrac, settle, toFrac, toPx } from './spots';
+import { BACK_TO_TOP_AFTER, SIZE, loadPos, savePos, settle, toPos, toPx } from './spots';
 import { launcherClass } from './AskLauncher';
 import { getVisitorId } from '../../lib/visitor';
+import ChatMascot from './ChatMascot';
+import RobotFace from './RobotFace';
 
 // The conversation is kept in this browser so a refresh or closing the chat
 // doesn't lose it; the server also keeps it under the visitor ID.
@@ -87,7 +89,7 @@ export default function AskWidget({ openOnMount = false }) {
   const headRef = useRef(null);
   const listRef = useRef(null);
   const inputRef = useRef(null);
-  const pos = useRef(loadFrac());
+  const pos = useRef(loadPos());
   const boxMoved = useRef(false);
   const growState = useRef(null);
   const closing = useRef(false);
@@ -95,9 +97,9 @@ export default function AskWidget({ openOnMount = false }) {
   const visitorId = useRef(getVisitorId());
   const expanded = messages.length > 0;
 
-  const place = useCallback((frac, animate = false) => {
-    const p = toPx(frac);
-    pos.current = frac;
+  const place = useCallback((position, animate = false) => {
+    const p = toPx(position);
+    pos.current = position;
     gsap[animate ? 'to' : 'set'](btnRef.current, { x: p.x, y: p.y, xPercent: -50, yPercent: -50, duration: 0.35, ease: 'power3.out' });
   }, []);
 
@@ -106,9 +108,9 @@ export default function AskWidget({ openOnMount = false }) {
     const btn = btnRef.current;
     place(pos.current);
     const land = (d) => {
-      const f = toFrac(settle({ x: d.x, y: d.y }));
-      saveFrac(f);
-      place(f, true);
+      const next = toPos(settle({ x: d.x, y: d.y }));
+      savePos(next);
+      place(next, true);
     };
     const [drag] = Draggable.create(btn, {
       type: 'x,y',
@@ -128,10 +130,20 @@ export default function AskWidget({ openOnMount = false }) {
     });
     const onResize = () => !drag.isDragging && place(pos.current);
     window.addEventListener('resize', onResize);
+    // docked above WhatsApp: slide up/down with the stack as back-to-top appears
+    let lifted = window.scrollY > BACK_TO_TOP_AFTER;
+    const onScroll = () => {
+      const now = window.scrollY > BACK_TO_TOP_AFTER;
+      if (now === lifted) return;
+      lifted = now;
+      if (pos.current?.dock && !drag.isDragging && !drag.isThrowing) place(pos.current, true);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
     if (openOnMount) setOpen(true);
     return () => {
       drag.kill();
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onScroll);
     };
   }, [place, openOnMount]);
 
@@ -185,8 +197,8 @@ export default function AskWidget({ openOnMount = false }) {
     if (boxMoved.current) {
       // the box was dragged: the button docks at the spot nearest to it
       const r = box.getBoundingClientRect();
-      const f = toFrac(settle({ x: r.left + r.width / 2, y: r.top + r.height / 2 }));
-      saveFrac(f);
+      const f = toPos(settle({ x: r.left + r.width / 2, y: r.top + r.height / 2 }));
+      savePos(f);
       place(f);
     }
     const b = btnRef.current.getBoundingClientRect();
@@ -321,7 +333,7 @@ export default function AskWidget({ openOnMount = false }) {
         className={launcherClass}
         style={{ width: SIZE, height: SIZE }}
       >
-        <Atom size={22} aria-hidden="true" />
+        <RobotFace size={42} />
       </button>
 
       {open && (
@@ -334,7 +346,7 @@ export default function AskWidget({ openOnMount = false }) {
           <div ref={contentRef} className="flex min-h-0 flex-1 flex-col">
             {expanded && (
               <div ref={headRef} className="flex cursor-grab items-center gap-2 border-b border-white/10 px-3 py-2.5 active:cursor-grabbing">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+                <ChatMascot size={36} online />
                 <p className="flex-1 select-none text-xs text-taupe">
                   <span className="font-semibold text-white">Ask about Umair</span> · answers from his portfolio
                 </p>
@@ -381,6 +393,13 @@ export default function AskWidget({ openOnMount = false }) {
                 )}
               </div>
             ) : (
+              <>
+              <div className="flex items-center gap-3 px-2 pt-2">
+                <ChatMascot size={48} online />
+                <p className="text-[13px] leading-snug text-timberWolf">
+                  <span className="font-semibold text-white">Hi! I'm Umair's AI assistant.</span> 
+                </p>
+              </div>
               <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-2 [scrollbar-width:none]">
                 {SUGGESTIONS.map((s) => (
                   <button
@@ -393,6 +412,7 @@ export default function AskWidget({ openOnMount = false }) {
                   </button>
                 ))}
               </div>
+              </>
             )}
 
             <form
@@ -452,7 +472,7 @@ export default function AskWidget({ openOnMount = false }) {
                 </div>
               </div>
               <p className="px-2.5 pb-1.5 pt-0.5 text-[10px] leading-snug text-dim">
-                AI assistant, can make mistakes. Chats are saved to improve this site.
+                AI assistant, can make mistakes. 
               </p>
             </form>
           </div>
