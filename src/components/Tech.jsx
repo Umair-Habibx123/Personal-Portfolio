@@ -1,4 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import ShaderBackground from './ShaderBackground';
+import shaders from '../data/shaders.json';
 import site, { img, srcSet } from '../lib/site';
 import { Heading, Reveal, trackPointer } from './ui';
 
@@ -89,7 +91,17 @@ export default function Tech() {
         <div className="mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {skills.groups.map((g, i) => (
             <Reveal key={g.group} delay={(i % 3) * 0.08}>
-              <div onMouseMove={trackPointer} className="spotlight glass-dark h-full rounded-3xl p-6 transition hover:border-white/25">
+              <div
+                onMouseMove={trackPointer}
+                className="spotlight pulse-border glass-dark h-full rounded-3xl p-6 transition hover:border-white/25"
+                style={{ '--pulse-delay': `${-i * 0.7}s` }}
+              >
+                {/* a faint neural-network shader, only behind the AI card */}
+                {g.group.startsWith('AI') && shaders.aiCard?.shader && (
+                  <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]" aria-hidden="true">
+                    <ShaderBackground config={shaders.aiCard} />
+                  </span>
+                )}
                 <h3 className="relative z-10 flex items-center gap-3 font-beckman text-lg font-bold uppercase tracking-[2px] text-timberWolf">
                   <span className="h-[2px] w-6 bg-accent" aria-hidden="true" />
                   {/* Beckman draws "&" like an 8, so the ampersand uses the body font */}

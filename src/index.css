@@ -36,6 +36,37 @@
   ::selection {
     @apply bg-pink-500/30;
   }
+  /* Only real content can be selected: a stray drag or Ctrl+A no longer paints
+     the nav, buttons, headings, marquee and cards. Paragraphs, list points, the
+     email, form fields and the AI chat stay selectable so they can be copied.
+     Add class="selectable" to anything else that should be copyable. */
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  p,
+  li,
+  blockquote,
+  input,
+  textarea,
+  [contenteditable],
+  a[href^='mailto:'],
+  .selectable,
+  [role='dialog'],
+  [role='dialog'] * {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  /* never selectable, even where the rules above would allow it */
+  header,
+  header *,
+  nav,
+  nav *,
+  .no-select,
+  .no-select * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
   :focus-visible {
     @apply outline-none ring-2 ring-pink-500 ring-offset-2;
   }
@@ -92,6 +123,45 @@
   }
   .spotlight:hover::before {
     opacity: 1;
+  }
+
+  /* Pulsing gradient border: a violet-pink-amber edge that slowly travels around
+     the card and breathes in and out. Uses ::after (the spotlight uses ::before).
+     Stagger cards with style="--pulse-delay: 0.6s". */
+  .pulse-border {
+    position: relative;
+  }
+  .pulse-border::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(from var(--pulse-angle), #7c3aed, #ec4899, #f59e0b, transparent 40%, transparent 60%, #7c3aed);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+    z-index: 2;
+    animation:
+      pulse-border-spin 6s linear infinite,
+      pulse-border-breathe 3s ease-in-out infinite;
+    animation-delay: var(--pulse-delay, 0s);
+  }
+  @property --pulse-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes pulse-border-spin {
+    to { --pulse-angle: 360deg; }
+  }
+  @keyframes pulse-border-breathe {
+    0%, 100% { opacity: 0.35; filter: drop-shadow(0 0 0 rgba(236, 72, 153, 0)); }
+    50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.55)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-border::after { animation: none; opacity: 0.5; }
   }
 
   /* The original grey gradient card border, now with the accent on hover */

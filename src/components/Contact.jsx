@@ -289,10 +289,10 @@ export default function Contact() {
                 );
               })}
             </div>
-            <div className="glass-dark rounded-2xl p-6">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-taupe">Based in</p>
-              <p className="mt-1 font-beckman text-lg font-bold tracking-[1px] text-timberWolf">{site.profile.location}</p>
-              <p className="mt-1 text-sm text-taupe">{site.profile.availability}</p>
+            <div className="glass-dark pulse-border relative rounded-2xl p-6">
+              <p className="relative font-mono text-[11px] uppercase tracking-widest text-taupe">Based in</p>
+              <p className="relative mt-1 font-beckman text-lg font-bold tracking-[1px] text-timberWolf">{site.profile.location}</p>
+              <p className="relative mt-1 text-sm text-taupe">{site.profile.availability}</p>
             </div>
           </Reveal>
         </div>

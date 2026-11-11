@@ -78,7 +78,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p style={delay(0.35)} className="hero-in mt-4 flex flex-wrap items-center gap-x-[0.3em] font-poppins text-[20px] font-semibold leading-[1.3] text-eerieBlack sm:text-[28px] lg:text-[32px] lg:[@media(max-height:760px)]:text-[26px]">
+          <p style={delay(0.35)} className="no-select hero-in mt-4 flex flex-wrap items-center gap-x-[0.3em] font-poppins text-[20px] font-semibold leading-[1.3] text-eerieBlack sm:text-[28px] lg:text-[32px] lg:[@media(max-height:760px)]:text-[26px]">
             <span>I build</span>
             <RotatingWord words={profile.rotatingWords} />
           </p>

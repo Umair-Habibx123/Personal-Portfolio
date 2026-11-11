@@ -5,7 +5,7 @@ export default function Marquee() {
   const items = [...site.marquee, ...site.marquee];
   return (
     // Exactly 5rem tall (--marquee-h in index.css) so hero + strip = one screen
-    <div className="relative z-10 flex h-[var(--marquee-h)] items-center overflow-hidden">
+    <div className="no-select relative z-10 flex h-[var(--marquee-h)] items-center overflow-hidden">
     <div className="-mx-4 w-[calc(100%+2rem)] -rotate-1 border-y-4 border-eerieBlack bg-eerieBlack py-3">
       <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
         <ul className="flex w-max animate-marquee gap-10 hover:[animation-play-state:paused]" aria-label="Technologies I use">

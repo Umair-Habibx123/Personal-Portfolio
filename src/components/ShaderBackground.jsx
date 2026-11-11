@@ -73,11 +73,21 @@ export default function ShaderBackground({ config }) {
         console.warn(`[shaders.json] unknown shader "${config.shader}". See docs/SHADERS.md.`);
         return;
       }
+      const uniforms = buildUniforms(paper, fragment, config);
+      // shaders that use the noise image can only start once it has loaded
+      const noise = uniforms.u_noiseTexture;
+      if (noise && !(noise.complete && noise.naturalWidth)) {
+        await new Promise((resolve) => {
+          noise.addEventListener('load', resolve, { once: true });
+          noise.addEventListener('error', resolve, { once: true });
+        });
+        if (disposed || mount) return;
+      }
       try {
         mount = new paper.ShaderMount(
           el,
           fragment,
-          buildUniforms(paper, fragment, config),
+          uniforms,
           { alpha: false, antialias: false, powerPreference: 'low-power' },
           onScreen ? speed : 0,
           (config.seed ?? 0) * 1000,
@@ -85,8 +95,9 @@ export default function ShaderBackground({ config }) {
           960 * 540, // max pixels: soft backgrounds need very few
         );
         setVisible(true);
-      } catch {
-        /* no WebGL after all: the CSS glow stays */
+      } catch (err) {
+        // no WebGL after all, or bad settings in shaders.json: the CSS glow stays
+        console.warn(`[shaders.json] "${config.shader}" could not start:`, err?.message || err);
       }
     };
 

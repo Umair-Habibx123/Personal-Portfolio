@@ -58,5 +58,20 @@
     },
     "speed": 0.35,
     "seed": 3
+  },
+  "aiCard": {
+    "shader": "neuroNoise",
+    "uniforms": {
+      "colorBack": "#000000",
+      "colorMid": "#7c3aed",
+      "colorFront": "#f472b6",
+      "brightness": 0.15,
+      "contrast": 0.35
+    },
+    "scale": 0.8,
+    "speed": 0.6,
+    "seed": 4,
+    "opacity": 0.8,
+    "blend": "screen"
   }
 }

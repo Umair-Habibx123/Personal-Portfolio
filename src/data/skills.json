@@ -93,21 +93,14 @@
       ]
     },
     {
-      "group": "AI",
+      "group": "AI & Data",
       "items": [
         "OpenAI",
         "Google Gemini",
         "Voice AI",
-        "RAG"
-      ]
-    },
-    {
-      "group": "Data",
-      "items": [
+        "RAG",
         "PostgreSQL",
-        "MongoDB",
-        "SQLite",
-        "Redis"
+        "MongoDB"
       ]
     },
     {
