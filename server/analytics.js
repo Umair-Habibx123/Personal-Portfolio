@@ -16,7 +16,33 @@
 //   pf:visitor:<id>           hash { first, last, visits, country, city, chats }
 //   pf:log                    the latest 2,000 visits (JSON), newest first
 //   pf:sess:<id>              30-minute session marker
+import { createHash, createHmac } from 'node:crypto';
+import UAParser from 'ua-parser-js';
 import { redis, redisConfigured, VISITOR_RE } from './redis.js';
+
+// ── Same device = same visitor (as in the Ordanix analytics) ───────────────
+// A device fingerprint made of the IP plus browser, browser version, OS,
+// device type and device model. Someone who clears their cookies and comes
+// back from the same device and network is still the same visitor, on any day.
+// Like Ordanix it changes when the IP or browser version changes.
+// Differences from Ordanix, kept on purpose:
+// - the IP is hashed with a secret key (a plain SHA-256 of an IP can be
+//   reversed in minutes) and is never stored, matching the cookie card's
+//   "No IP addresses"
+// - it is used for analytics only; the AI chat keeps the random browser ID, so
+//   people on the same Wi-Fi never see each other's chats
+function ipHash(ip, env) {
+  const secret = env.ANALYTICS_SECRET || env.CONTACT_SECRET || env.KV_REST_API_TOKEN || env.UPSTASH_REDIS_REST_TOKEN || '';
+  return secret ? createHmac('sha256', secret).update(ip).digest('hex') : createHash('sha256').update(ip).digest('hex');
+}
+function fingerprint(ip, uaRaw, env) {
+  if (!ip) return null;
+  const r = new UAParser(uaRaw).getResult();
+  const deviceType = r.device.type === 'mobile' ? 'mobile' : r.device.type === 'tablet' ? 'tablet' : 'desktop';
+  const parts = [ipHash(ip, env), r.browser.name || 'Unknown', r.browser.version || '0', r.os.name || 'Unknown', deviceType, r.device.model || 'Unknown'];
+  return createHash('sha256').update(parts.join('|')).digest('hex').slice(0, 32);
+}
+const DEVICE_TTL = 400 * 24 * 3600;
 
 const SESSION_SECONDS = 30 * 60;
 const LOG_SIZE = 2000;
@@ -111,8 +137,19 @@ export async function handleTrack(body, { headers = {}, ip, env = process.env } 
   const host = String(headers['x-forwarded-host'] || headers.host || '');
   if (!shouldRecord({ host, ua, env })) return { recorded: false, reason: 'skipped' };
   if (rateLimited(ip)) return { recorded: false, reason: 'rate' };
-  const visitorId = String(body?.visitorId || '');
-  if (!VISITOR_RE.test(visitorId)) return { recorded: false, reason: 'visitor' };
+  const browserId = String(body?.visitorId || '');
+  if (!VISITOR_RE.test(browserId)) return { recorded: false, reason: 'visitor' };
+
+  // Same device seen before (e.g. they cleared their cookies)? Same visitor.
+  const dk = fingerprint(ip, ua, env);
+  let visitorId = browserId;
+  if (dk) {
+    const [, earlier] = await redis(env, [
+      ['SET', `pf:dk:${dk}`, browserId, 'EX', DEVICE_TTL, 'NX'],
+      ['GET', `pf:dk:${dk}`],
+    ]);
+    if (earlier && VISITOR_RE.test(earlier)) visitorId = earlier;
+  }
 
   // first: is this a new visit (no ping from this visitor in the last 30 min)?
   const [fresh] = await redis(env, [['SET', `pf:sess:${visitorId}`, '1', 'EX', SESSION_SECONDS, 'NX']]);
