@@ -9,6 +9,7 @@
       "period": "Feb 2026 – Present",
       "points": [
         "Lead developer of the company's SaaS base template (Next.js, FastAPI, PostgreSQL), which all client products are built on: MFA and passkeys, a role and permission builder, organizations, Stripe subscriptions, real-time chat and right-to-left languages.",
+        "Built AI products for clients: a real-time AI call assistant that listens to live phone calls over Twilio, transcribes them as they happen (Deepgram, OpenAI) and coaches the agent with the next thing to say, including AI role-play training with realistic voices (ElevenLabs).",
         "Built a white-label AI document assistant (RAG) with strict tenant isolation, cited answers, tiered plans with AI credits and bring-your-own-LLM settings.",
         "Built a UK self-assessment tax filing platform end to end: SA100 and SA800 returns as XML, submitted to HMRC with fraud-prevention headers, with a tax calculator scored against HMRC's 273 official test cases.",
         "Run production: Docker, GitHub Actions CI/CD, Terraform for AWS, VPS hosting with Nginx/Caddy and PM2, plus backup and restore procedures."
@@ -17,7 +18,8 @@
         "Next.js",
         "FastAPI",
         "PostgreSQL",
-        "RAG",
+        "OpenAI",
+        "Twilio",
         "Stripe",
         "Docker"
       ]

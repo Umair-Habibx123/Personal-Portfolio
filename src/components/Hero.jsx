@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MapDots, MapLand } from './VisitorMap';
+import ScrambleText from './ScrambleText';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import site, { img, srcSet } from '../lib/site';
@@ -65,14 +66,14 @@ export default function Hero() {
         <div className="max-w-2xl">
           <h1 className="font-poppins font-black uppercase leading-[0.95] text-eerieBlack">
             <span style={delay(0.1)} className="hero-in block text-[40px] xs:text-[50px] sm:text-[60px] lg:text-[80px] lg:[@media(max-height:860px)]:text-[64px] lg:[@media(max-height:760px)]:text-[52px]">
-              {profile.greeting}
+              <ScrambleText text={profile.greeting} delay={150} />
             </span>
             <span className="block overflow-hidden">
               <span
                 style={delay(0.2)}
                 className="hero-rise text-gradient block font-mova text-[64px] font-extrabold leading-[1.05] xs:text-[80px] sm:text-[110px] lg:text-[140px] lg:[@media(max-height:860px)]:text-[112px] lg:[@media(max-height:760px)]:text-[92px]"
               >
-                {profile.shortName}
+                <ScrambleText text={profile.shortName} delay={350} step={1 / 4} />
               </span>
             </span>
           </h1>

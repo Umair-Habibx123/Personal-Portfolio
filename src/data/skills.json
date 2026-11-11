@@ -93,14 +93,23 @@
       ]
     },
     {
-      "group": "Data & AI",
+      "group": "AI",
+      "items": [
+        "OpenAI",
+        "Google Gemini",
+        "LLM apps & agents",
+        "RAG & pgvector",
+        "Voice AI (Deepgram, ElevenLabs)",
+        "Twilio"
+      ]
+    },
+    {
+      "group": "Data",
       "items": [
         "PostgreSQL",
         "MongoDB",
         "SQLite",
-        "RAG",
-        "Google Gemini",
-        "pgvector"
+        "Redis"
       ]
     },
     {

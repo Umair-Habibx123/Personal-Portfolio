@@ -4,9 +4,12 @@
 // as a backup). It links a visitor's visits and their AI chat, so the chat can
 // be reloaded later. It contains nothing personal.
 //
-// Visits are only sent from the live site: never from localhost or a local
+// Visits are only sent after the visitor allows analytics in the cookie card,
+// and only from the live site: never from localhost or a local
 // network address, never from automated browsers, and never after the owner
 // opts out by opening the site once with ?notrack (?track turns it back on).
+
+import { hasConsent } from './consent.js';
 
 const KEY = 'pf-vid';
 const OPT_OUT = 'pf-notrack';
@@ -54,14 +57,16 @@ export function trackingAllowed() {
   } catch {
     /* ignore */
   }
+  // the visitor must have said yes to analytics in the cookie card
+  if (!hasConsent('analytics')) return false;
   if (LOCAL_RE.test(location.hostname)) return false;
   if (navigator.webdriver) return false;
   return true;
 }
 
-/** Sends one visit ping (the server ignores repeats within 30 minutes). */
+/** Sends one visit ping (the server ignores repeats within 30 minutes). Returns true if sent. */
 export function trackVisit() {
-  if (!trackingAllowed()) return;
+  if (!trackingAllowed()) return false;
   const body = JSON.stringify({
     visitorId: getVisitorId(),
     path: location.pathname + location.hash,
@@ -69,9 +74,10 @@ export function trackVisit() {
     search: location.search,
   });
   try {
-    if (navigator.sendBeacon?.('/api/analytics', new Blob([body], { type: 'application/json' }))) return;
+    if (navigator.sendBeacon?.('/api/analytics', new Blob([body], { type: 'application/json' }))) return true;
   } catch {
     /* fall through */
   }
   fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {});
+  return true;
 }

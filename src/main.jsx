@@ -15,9 +15,16 @@ const app = (
 if (root.hasChildNodes()) hydrateRoot(root, app);
 else createRoot(root).render(app);
 
-// Count the visit once the page has settled (live site only; see lib/visitor.js)
-import('./lib/visitor.js').then(({ trackVisit }) => {
-  const go = () => trackVisit();
+// Count the visit once the page has settled (live site only, and only with the
+// visitor's analytics consent; see lib/visitor.js). If they accept later, in the
+// cookie card, the visit is counted then.
+Promise.all([import('./lib/visitor.js'), import('./lib/consent.js')]).then(([{ trackVisit }, { onConsentChange }]) => {
+  let sent = false;
+  const go = () => {
+    if (sent) return;
+    sent = trackVisit();
+  };
   if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 5000 });
   else setTimeout(go, 2000);
+  onConsentChange((c) => c?.analytics && go());
 });

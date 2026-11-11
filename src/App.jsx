@@ -9,6 +9,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingButtons from './components/FloatingButtons';
+import CookieConsent from './components/CookieConsent';
 
 // Section order follows the original site: light hero and Overview, dark
 // Technologies and Projects, light Experience, dark Contact, light footer.
@@ -33,6 +34,7 @@ export default function App() {
       </main>
       <Footer />
       <FloatingButtons />
+      <CookieConsent />
     </MotionConfig>
   );
 }

@@ -12,8 +12,8 @@
       "text": "Next.js, FastAPI and PostgreSQL, with auth, roles, organizations and Stripe billing."
     },
     {
-      "title": "AI & RAG",
-      "text": "Document chat with cited answers, tenant isolation and bring-your-own-LLM settings."
+      "title": "AI products",
+      "text": "LLM features from document chat to real-time voice assistants on phone calls, built with OpenAI, Gemini, Twilio and speech AI."
     },
     {
       "title": "Mobile",

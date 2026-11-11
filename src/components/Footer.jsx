@@ -1,5 +1,6 @@
 import site, { img } from '../lib/site';
 import Visitors from './Visitors';
+import { openCookieSettings } from '../lib/consent';
 
 /** The original footer: abstract background, name and quote. */
 export default function Footer() {
@@ -25,6 +26,9 @@ export default function Footer() {
         <p className="mt-6 text-[13px] text-neutral-600">
           © {new Date().getFullYear()} {profile.name}. {footer.note}
         </p>
+        <button type="button" onClick={openCookieSettings} className="mt-2 text-[12px] text-neutral-500 underline-offset-2 hover:text-eerieBlack hover:underline">
+          Cookie settings
+        </button>
         <Visitors />
       </div>
 
