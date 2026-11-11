@@ -213,9 +213,11 @@ export default function AskWidget({ openOnMount = false }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [open, close]);
 
-  // Nothing saved in this browser? Ask the server for this visitor's last chat.
+  // Nothing saved in this browser at all? Ask the server for this visitor's
+  // last chat. (After "Clear chat" the browser keeps an empty record, so a
+  // cleared chat doesn't come back; the server copy is kept.)
   useEffect(() => {
-    if (saved.current?.messages?.length || !visitorId.current) return undefined;
+    if (saved.current || !visitorId.current) return undefined;
     let cancelled = false;
     fetch(`/api/chat?visitor=${visitorId.current}`)
       .then((r) => (r.ok ? r.json() : null))
@@ -239,7 +241,7 @@ export default function AskWidget({ openOnMount = false }) {
   useEffect(() => {
     if (busy) return;
     const done = messages.filter((m) => m.text);
-    saveLocal(done.length ? { conversationId: conversationId.current, messages: done.slice(-40) } : null);
+    saveLocal({ conversationId: conversationId.current, messages: done.slice(-40) });
   }, [messages, busy]);
 
   useEffect(() => {
@@ -287,8 +289,10 @@ export default function AskWidget({ openOnMount = false }) {
     }
   }
 
+  /** Clears the chat in this browser and starts a new one (the server copy stays). */
   function newChat() {
     captureGrow();
+    saved.current = { conversationId: '', messages: [] };
     setMessages([]);
     setError('');
     conversationId.current = newId();
@@ -334,6 +338,15 @@ export default function AskWidget({ openOnMount = false }) {
                 <p className="flex-1 select-none text-xs text-taupe">
                   <span className="font-semibold text-white">Ask about Umair</span> · answers from his portfolio
                 </p>
+                <button
+                  type="button"
+                  onClick={newChat}
+                  disabled={busy}
+                  title="Clear this chat and start a new one"
+                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-semibold text-taupe transition hover:bg-white/10 hover:text-white disabled:opacity-40"
+                >
+                  <RotateCcw size={12} aria-hidden="true" /> Clear chat
+                </button>
               </div>
             )}
 
@@ -417,11 +430,6 @@ export default function AskWidget({ openOnMount = false }) {
                   >
                     <Atom size={16} aria-hidden="true" />
                   </span>
-                  {expanded && (
-                    <button type="button" onClick={newChat} className={iconBtn} aria-label="Start a new chat" title="New chat">
-                      <RotateCcw size={15} />
-                    </button>
-                  )}
                   <ResumeLink className={iconBtn} aria-label="Download resume" title="Resume">
                     <FileText size={15} />
                   </ResumeLink>
