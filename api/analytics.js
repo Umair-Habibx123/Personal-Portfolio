@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         res.setHeader('Cache-Control', 'no-store');
         return res.status(200).json({ ok: false, reason: 'Analytics storage is not connected (set the Upstash Redis variables in Vercel and redeploy).' });
       }
-      res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
+      res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=120');
       return res.status(200).json({ ok: true, ...stats });
     } catch (err) {
       console.error('[analytics] stats failed:', err.message);
