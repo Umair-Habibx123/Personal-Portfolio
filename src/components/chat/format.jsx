@@ -1,6 +1,6 @@
 // Shared pieces of the "Ask Umair" chat: suggested questions, and turning the
 // assistant's text (with [[tags]]) into paragraphs, bullets and buttons.
-import { ExternalLink, Download, Mail } from 'lucide-react';
+import { Check, ExternalLink, Download, Mail } from 'lucide-react';
 import site from '../../lib/site';
 import { ResumeLink } from '../ui';
 
@@ -12,7 +12,7 @@ export const SUGGESTIONS = [
   'Is he available for freelance work?',
 ];
 
-const TAG = /\[\[(\w+)(?::([^\]]+))?\]\]/g;
+const TAG = /\[\[([\w-]+)(?::([^\]]+))?\]\]/g;
 
 /** Splits the assistant's text into readable text and action tags. */
 export function parse(text) {
@@ -117,6 +117,13 @@ export function Actions({ actions, onContact }) {
                 <a key={i} href={site.links.upwork} target="_blank" rel="noreferrer" className={btn}>
                   View on Upwork <ExternalLink size={12} />
                 </a>
+              );
+            }
+            if (a.kind === 'ask-umair') {
+              return (
+                <span key={i} className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200">
+                  <Check size={12} aria-hidden="true" /> Saved for Umair
+                </span>
               );
             }
             if (a.kind === 'contact') {

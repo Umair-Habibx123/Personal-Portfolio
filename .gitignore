@@ -30,3 +30,5 @@ data/*.db
 data/*.db-*
 /dist
 /.ssr
+# exports contain visitors' names and emails: never commit them
+data/export/

@@ -14,7 +14,6 @@
     "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
     "nodemailer": "10.2.1",
-    "page-mascot": "^0.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.167.1"
@@ -24,11 +23,18 @@
     "start": "vite",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir .ssr --emptyOutDir && node scripts/prerender.mjs",
     "preview": "vite preview",
-    "messages:sync": "node scripts/messages.mjs sync",
-    "messages:list": "node scripts/messages.mjs list",
+    "messages:sync": "node --disable-warning=ExperimentalWarning scripts/data.mjs sync",
+    "messages:list": "node --disable-warning=ExperimentalWarning scripts/data.mjs messages-full",
     "shaders:list": "node scripts/list-shaders.mjs",
-    "chats:list": "node scripts/messages.mjs chats",
-    "analytics": "node scripts/analytics.mjs"
+    "chats:list": "node --disable-warning=ExperimentalWarning scripts/data.mjs chats",
+    "analytics": "node scripts/analytics.mjs",
+    "data:sync": "node --disable-warning=ExperimentalWarning scripts/data.mjs sync",
+    "data:report": "node --disable-warning=ExperimentalWarning scripts/data.mjs report",
+    "data:messages": "node --disable-warning=ExperimentalWarning scripts/data.mjs messages",
+    "data:chats": "node --disable-warning=ExperimentalWarning scripts/data.mjs chats",
+    "data:questions": "node --disable-warning=ExperimentalWarning scripts/data.mjs questions",
+    "data:answered": "node --disable-warning=ExperimentalWarning scripts/data.mjs answered",
+    "data:export": "node --disable-warning=ExperimentalWarning scripts/data.mjs export"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

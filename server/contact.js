@@ -142,6 +142,12 @@ async function sendToOwner(record, env) {
   });
 }
 
+/** A plain notification email to YOU (used by the chat for questions it couldn't answer). */
+export async function notifyOwner({ subject, text }, env = process.env) {
+  if (!env.MAIL_TO) throw new Error('MAIL_TO is not set');
+  await transport(env).sendMail({ from: from(env, 'Portfolio AI assistant'), to: env.MAIL_TO, subject, text });
+}
+
 /** Saves to the private repo. Returns "saved" or "duplicate" (that file already exists). */
 async function saveToGitHub(record, env) {
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) throw new Error('GitHub backup is not configured');
