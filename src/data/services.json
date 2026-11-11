@@ -1,0 +1,29 @@
+{
+  "_readme": "Services the 'Ask Umair' assistant can recommend (the project matcher). `id` is used in the chat; keep prices in sync with Upwork.",
+  "items": [
+    {
+      "id": "saas",
+      "name": "Production-ready SaaS app",
+      "summary": "Next.js + FastAPI SaaS with login (2FA, passkeys, Google/GitHub), roles and permissions, organizations, Stripe subscriptions, admin panel, support, storage and deployment.",
+      "fromPrice": 300,
+      "delivery": "5–21 days",
+      "url": "https://www.upwork.com/services/product/development-it-a-production-ready-saas-app-with-next-js-auth-stripe-and-admin-panel-2120247985184169555"
+    },
+    {
+      "id": "flutter",
+      "name": "Flutter + Firebase app",
+      "summary": "New Flutter apps for Android/iOS with Firebase, or bug fixes and new features for an existing Flutter app. Security rules, real-device testing, signed APK.",
+      "fromPrice": 60,
+      "delivery": "2–14 days",
+      "url": "https://www.upwork.com/services/product/development-it-a-flutter-app-with-firebase-or-fixes-and-features-for-your-existing-app-2120257412056040469"
+    },
+    {
+      "id": "rag",
+      "name": "AI assistant for your documents (RAG)",
+      "summary": "An AI assistant that answers from your PDFs and documents with cited sources (document and page), OCR for scanned files, roles, approval workflow and usage limits. Runs on OpenAI by default.",
+      "fromPrice": 350,
+      "delivery": "6–21 days",
+      "url": "https://www.upwork.com/services/product/development-it-an-ai-assistant-that-answers-from-your-documents-with-cited-sources-2120260631545449412"
+    }
+  ]
+}

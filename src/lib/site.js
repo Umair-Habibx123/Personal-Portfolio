@@ -59,7 +59,6 @@ export function srcSet(name) {
 // Real widths of the full-size images (for srcset)
 const IMAGE_WIDTHS = {
   'people/umair.webp': 1114,
-  'backgrounds/bw-map.webp': 1920,
 };
 
 const site = {

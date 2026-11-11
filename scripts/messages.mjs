@@ -39,6 +39,24 @@ if (!db.prepare('PRAGMA table_info(messages)').all().some((c) => c.name === 'ver
   db.exec('ALTER TABLE messages ADD COLUMN verified INTEGER NOT NULL DEFAULT 0');
 }
 
+// Chats from the "Ask Umair" assistant (chats/YYYY/MM/<conversation>/<turn>.json)
+db.exec(`
+  CREATE TABLE IF NOT EXISTS chats (
+    path            TEXT PRIMARY KEY,
+    conversation_id TEXT NOT NULL,
+    turn            INTEGER NOT NULL,
+    at              TEXT NOT NULL,
+    question        TEXT NOT NULL,
+    answer          TEXT NOT NULL,
+    model           TEXT,
+    synced_at       TEXT NOT NULL
+  );
+  CREATE INDEX IF NOT EXISTS chats_at ON chats (at DESC);
+`);
+if (!db.prepare('PRAGMA table_info(chats)').all().some((c) => c.name === 'visitor_id')) {
+  db.exec('ALTER TABLE chats ADD COLUMN visitor_id TEXT');
+}
+
 async function gh(path, accept = 'application/vnd.github+json') {
   const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}${path}`, {
     headers: {
@@ -91,6 +109,20 @@ async function sync() {
     );
     added++;
   }
+  // chats
+  const chatFiles = tree.tree.filter((f) => f.type === 'blob' && /^chats\/.+\.json$/.test(f.path));
+  const knownChats = new Set(db.prepare('SELECT path FROM chats').all().map((r) => r.path));
+  const insertChat = db.prepare(
+    'INSERT OR IGNORE INTO chats (path, conversation_id, turn, at, question, answer, model, synced_at, visitor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+  );
+  let chatsAdded = 0;
+  for (const f of chatFiles.filter((x) => !knownChats.has(x.path))) {
+    const c = JSON.parse(await gh(`/contents/${f.path}?ref=${encodeURIComponent(GITHUB_BRANCH)}`, 'application/vnd.github.raw+json'));
+    insertChat.run(f.path, c.conversationId, c.turn, c.at, c.question, c.answer, c.model || null, new Date().toISOString(), c.visitorId || null);
+    chatsAdded++;
+  }
+  console.log(`Synced ${chatsAdded} new chat message(s). ${db.prepare('SELECT COUNT(*) AS n FROM chats').get().n} total.`);
+
   const total = db.prepare('SELECT COUNT(*) AS n FROM messages').get().n;
   const unsent = db.prepare('SELECT COUNT(*) AS n FROM messages WHERE smtp_sent = 0').get().n;
   console.log(`Synced ${added} new message(s). ${total} total in ${DB_PATH}.`);
@@ -112,11 +144,24 @@ function list(limit) {
   console.log('─'.repeat(70));
 }
 
+function listChats(limit) {
+  const rows = db.prepare('SELECT at, conversation_id, turn, question, answer FROM chats ORDER BY at DESC LIMIT ?').all(limit);
+  if (!rows.length) return console.log('No chats in the local database. Run "npm run messages:sync" first.');
+  for (const r of rows.reverse()) {
+    console.log('─'.repeat(70));
+    console.log(`${r.at}  conversation ${r.conversation_id} #${r.turn}`);
+    console.log(`Q: ${r.question}`);
+    console.log(`A: ${r.answer.replace(/\[\[[^\]]*\]\]/g, '').trim()}`);
+  }
+  console.log('─'.repeat(70));
+}
+
 const [cmd = 'sync', arg] = process.argv.slice(2);
 if (cmd === 'sync') await sync();
 else if (cmd === 'list') list(Number(arg) || 20);
+else if (cmd === 'chats') listChats(Number(arg) || 30);
 else {
-  console.error(`Unknown command "${cmd}". Use "sync" or "list".`);
+  console.error(`Unknown command "${cmd}". Use "sync", "list" or "chats".`);
   process.exit(1);
 }
 db.close();

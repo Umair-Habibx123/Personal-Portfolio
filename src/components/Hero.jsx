@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { MapDots, MapLand } from './VisitorMap';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import site, { img, srcSet } from '../lib/site';
@@ -46,13 +47,10 @@ export default function Hero() {
 
   return (
     <section id="top" className="relative flex min-h-[max(36rem,calc(100svh-var(--marquee-h)))] flex-col overflow-hidden">
-      {/* Original backdrop: black-and-white world map under a diagonal light/dark split */}
-      {/* <picture> so only ONE map downloads: the light one on phones, the b/w one from 640px */}
-      <picture>
-        <source media="(min-width: 640px)" srcSet={srcSet('backgrounds/bw-map.webp')} sizes="min(100vw, 1280px)" />
-        <img src={img('backgrounds/world-map.webp')} alt="" aria-hidden="true" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
-      </picture>
+      {/* World map drawn from real coastline data, with a dot wherever visitors come from */}
+      <MapLand />
       <div className="hero-split absolute inset-0" />
+      <MapDots />
       {/* New: colour glow on the dark side */}
       <div aria-hidden="true" className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[70vmin] w-[70vmin] animate-aurora rounded-full bg-pink-500/30 blur-[120px]" />
       <div aria-hidden="true" className="pointer-events-none absolute right-[15%] top-[20%] h-[45vmin] w-[45vmin] animate-aurora rounded-full bg-violet-600/30 blur-[120px]" style={{ animationDelay: '-10s' }} />
@@ -84,18 +82,18 @@ export default function Hero() {
             <RotatingWord words={profile.rotatingWords} />
           </p>
 
-          <p style={delay(0.45)} className="hero-in mt-4 max-w-xl text-[16px] leading-relaxed text-jetLight sm:text-[18px] lg:max-w-[min(36rem,47vw)] lg:[@media(max-height:760px)]:mt-3 lg:[@media(max-height:760px)]:text-[16px] lg:[@media(max-height:760px)]:leading-normal">
+          <p style={delay(0.45)} className="hero-in mt-4 hidden max-w-xl text-[16px] sm:block leading-relaxed text-jetLight sm:text-[18px] lg:max-w-[min(36rem,47vw)] lg:[@media(max-height:760px)]:mt-3 lg:[@media(max-height:760px)]:text-[16px] lg:[@media(max-height:760px)]:leading-normal">
             {profile.intro}
           </p>
 
-          <div style={delay(0.55)} className="hero-in mt-7 lg:[@media(max-height:760px)]:mt-5 flex flex-wrap items-center gap-3">
-            <a href="#projects" className="btn-accent">
+          <div style={delay(0.55)} className="hero-in mt-6 flex items-center gap-1.5 sm:mt-7 sm:flex-wrap sm:gap-3 lg:[@media(max-height:760px)]:mt-5">
+            <a href="#projects" className="btn-accent max-sm:!gap-0 max-sm:!whitespace-nowrap max-sm:!px-2.5 max-sm:!py-2.5 max-sm:!text-[10.5px] max-sm:!tracking-[0.3px]">
               SEE MY WORK
             </a>
-            <a href="#contact" className="btn-dark">
+            <a href="#contact" className="btn-dark max-sm:!gap-0 max-sm:!whitespace-nowrap max-sm:!px-2.5 max-sm:!py-2.5 max-sm:!text-[10.5px] max-sm:!tracking-[0.3px]">
               GET IN TOUCH
             </a>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center sm:gap-1">
               {socials.map(({ href, label, Icon }) => (
                 <a
                   key={label}
@@ -103,9 +101,9 @@ export default function Hero() {
                   target={href.startsWith('mailto') ? undefined : '_blank'}
                   rel="noreferrer"
                   aria-label={label}
-                  className="grid h-11 w-11 place-items-center rounded-full text-jetLight transition hover:bg-eerieBlack hover:text-white"
+                  className="grid h-7 w-7 place-items-center rounded-full text-jetLight sm:h-11 sm:w-11 transition hover:bg-eerieBlack hover:text-white"
                 >
-                  <Icon size={19} />
+                  <Icon size={19} className="max-sm:h-[15px] max-sm:w-[15px]" />
                 </a>
               ))}
             </div>

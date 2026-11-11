@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Check, Loader2, AlertCircle, Github, Linkedin, FileText } from 'lucide-react';
 import site from '../lib/site';
@@ -50,6 +50,24 @@ export default function Contact() {
   const [serverError, setServerError] = useState('');
   const [copied, setCopied] = useState(false);
   const startedAt = useRef(Date.now());
+
+  // The chat assistant's "Message Umair" button pre-fills the form
+  useEffect(() => {
+    const onPrefill = (e) => {
+      const { subject = '', message = '' } = e.detail || {};
+      setValues((v) => ({
+        ...v,
+        subject: v.subject || subject.slice(0, LIMITS.subject),
+        message: v.message || (message ? `About: "${message}"
+
+`.slice(0, LIMITS.message) : ''),
+      }));
+      setStatus((st) => (st === 'sent' ? 'idle' : st));
+      setTimeout(() => document.getElementById('message')?.focus({ preventScroll: true }), 600);
+    };
+    window.addEventListener('prefill-contact', onPrefill);
+    return () => window.removeEventListener('prefill-contact', onPrefill);
+  }, []);
 
   const set = (k) => (e) => {
     const value = e.target.value.slice(0, LIMITS[k]);

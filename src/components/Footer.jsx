@@ -1,4 +1,5 @@
 import site, { img } from '../lib/site';
+import Visitors from './Visitors';
 
 /** The original footer: abstract background, name and quote. */
 export default function Footer() {
@@ -24,6 +25,7 @@ export default function Footer() {
         <p className="mt-6 text-[13px] text-neutral-600">
           © {new Date().getFullYear()} {profile.name}. {footer.note}
         </p>
+        <Visitors />
       </div>
 
     </footer>

@@ -89,8 +89,75 @@ function devContactApi(env) {
   };
 }
 
+/** Runs /api/chat locally during `npm run dev` (streams like the Vercel function). */
+function devChatApi(env) {
+  return {
+    name: 'dev-chat-api',
+    configureServer(server) {
+      server.middlewares.use('/api/chat', async (req, res) => {
+        if (req.method === 'GET') {
+          const { handleChatHistory } = await server.ssrLoadModule('/server/chat.js');
+          const visitor = new URL(req.originalUrl, 'http://x').searchParams.get('visitor') || '';
+          const out = await handleChatHistory(visitor, { env: { ...process.env, ...env } }).catch(() => ({ ok: false, status: 500 }));
+          res.statusCode = out.status || 200;
+          res.setHeader('Content-Type', 'application/json');
+          return res.end(JSON.stringify(out));
+        }
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          return res.end();
+        }
+        let raw = '';
+        for await (const chunk of req) raw += chunk;
+        let body = null;
+        try {
+          body = JSON.parse(raw);
+        } catch {
+          /* handled by handleChat */
+        }
+        const { handleChat } = await server.ssrLoadModule('/server/chat.js');
+        await handleChat(body, { ip: req.socket.remoteAddress, userAgent: req.headers['user-agent'], env: { ...process.env, ...env } }, {
+          json: (status, obj) => {
+            res.statusCode = status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(obj));
+          },
+          start: () => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+          },
+          write: (t) => res.write(t),
+          end: () => res.end(),
+        });
+      });
+    },
+  };
+}
+
+/** /api/analytics locally: stats can be read, but visits from localhost are never recorded. */
+function devAnalyticsApi(env) {
+  return {
+    name: 'dev-analytics-api',
+    configureServer(server) {
+      server.middlewares.use('/api/analytics', async (req, res) => {
+        const mod = await server.ssrLoadModule('/server/analytics.js');
+        const allEnv = { ...process.env, ...env };
+        if (req.method === 'GET') {
+          const stats = await mod.handleStats({ env: allEnv }).catch(() => null);
+          res.statusCode = stats ? 200 : 404;
+          res.setHeader('Content-Type', 'application/json');
+          return res.end(JSON.stringify(stats ? { ok: true, ...stats } : { ok: false }));
+        }
+        for await (const _ of req); // drain the body
+        res.statusCode = 204; // local visits are ignored
+        res.end();
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), seoFromData(), resumeFromFolder(), devContactApi(loadEnv(mode, process.cwd(), ''))],
+  plugins: [react(), seoFromData(), resumeFromFolder(), devContactApi(loadEnv(mode, process.cwd(), '')), devChatApi(loadEnv(mode, process.cwd(), '')), devAnalyticsApi(loadEnv(mode, process.cwd(), ''))],
   // three.js is split into its own lazily-loaded chunk (desktop only)
   build: {
     chunkSizeWarningLimit: 900,

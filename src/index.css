@@ -133,6 +133,26 @@
       background: linear-gradient(135deg, rgba(244, 244, 246, 0.82) 60%, rgba(10, 10, 10, 0.95) 60%);
     }
   }
+  /* visitor dots on the hero map */
+  .visitor-dot {
+    fill: #ec4899;
+    stroke: #fff;
+    stroke-width: 0.9;
+    filter: drop-shadow(0 0 3px rgba(236, 72, 153, 0.8));
+  }
+  .visitor-dot-pulse {
+    fill: rgba(236, 72, 153, 0.45);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: visitor-pulse 2.8s ease-out infinite;
+  }
+  @keyframes visitor-pulse {
+    from { transform: scale(1); opacity: 0.9; }
+    to { transform: scale(4); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .visitor-dot-pulse { animation: none; opacity: 0; }
+  }
   .bw-gradient {
     background: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 40%, rgba(153, 153, 161, 0) 70%);
   }

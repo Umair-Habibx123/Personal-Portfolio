@@ -3,12 +3,26 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "functions": {
-    "api/contact.js": { "maxDuration": 30 }
+    "api/contact.js": {
+      "maxDuration": 30
+    },
+    "api/chat.js": {
+      "maxDuration": 30,
+      "includeFiles": "src/data/**"
+    },
+    "api/analytics.js": {
+      "maxDuration": 10
+    }
   },
   "headers": [
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }

@@ -14,3 +14,10 @@ const app = (
 // In development the root is empty: render from scratch.
 if (root.hasChildNodes()) hydrateRoot(root, app);
 else createRoot(root).render(app);
+
+// Count the visit once the page has settled (live site only; see lib/visitor.js)
+import('./lib/visitor.js').then(({ trackVisit }) => {
+  const go = () => trackVisit();
+  if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 5000 });
+  else setTimeout(go, 2000);
+});
