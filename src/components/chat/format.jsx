@@ -2,7 +2,6 @@
 // assistant's text (with [[tags]]) into paragraphs, bullets and buttons.
 import { ExternalLink, Download, Mail } from 'lucide-react';
 import site from '../../lib/site';
-import services from '../../data/services.json';
 import { ResumeLink } from '../ui';
 
 export const SUGGESTIONS = [
@@ -18,12 +17,24 @@ const TAG = /\[\[(\w+)(?::([^\]]+))?\]\]/g;
 /** Splits the assistant's text into readable text and action tags. */
 export function parse(text) {
   const actions = [];
-  const clean = text.replace(TAG, (_, kind, value) => {
-    actions.push({ kind: kind.toLowerCase(), value: value?.trim() });
-    return '';
+  const seen = new Set();
+  const lines = text.split('\n').map((line) => {
+    // a line of only tags becomes buttons and disappears from the text
+    const onlyTags = line.trim() && !line.replace(TAG, '').trim();
+    return line.replace(TAG, (_, kind, value) => {
+      const k = kind.toLowerCase();
+      const v = value?.trim();
+      if (!seen.has(`${k}:${v}`)) {
+        seen.add(`${k}:${v}`);
+        actions.push({ kind: k, value: v });
+      }
+      // inside a sentence, keep the project's name readable
+      return !onlyTags && k === 'project' && v ? v : '';
+    });
   });
   // hide a half-streamed tag at the very end ("[[proj")
-  return { text: clean.replace(/\[\[[^\]]*$/, '').trim(), actions };
+  const clean = lines.join('\n').replace(/\[\[[^\]]*$/, '').replace(/\n{3,}/g, '\n\n');
+  return { text: clean.trim(), actions };
 }
 
 function Inline({ text }) {
@@ -101,24 +112,10 @@ export function Actions({ actions, onContact }) {
                 </a>
               );
             }
-            if (a.kind === 'service') {
-              const s = services.items.find((x) => x.id === a.value);
-              if (!s) return null;
+            if (a.kind === 'upwork' && site.links.upwork) {
               return (
-                <a
-                  key={i}
-                  href={s.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block w-full rounded-2xl border border-pink-400/30 bg-gradient-to-br from-violet-600/25 to-pink-500/20 p-3 text-left transition hover:border-pink-400/70"
-                >
-                  <span className="block text-sm font-bold text-white">{s.name}</span>
-                  <span className="mt-0.5 block text-xs text-timberWolf">
-                    From ${s.fromPrice} · {s.delivery}
-                  </span>
-                  <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-pink-300">
-                    View on Upwork <ExternalLink size={11} />
-                  </span>
+                <a key={i} href={site.links.upwork} target="_blank" rel="noreferrer" className={btn}>
+                  View on Upwork <ExternalLink size={12} />
                 </a>
               );
             }

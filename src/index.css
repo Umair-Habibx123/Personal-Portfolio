@@ -134,21 +134,29 @@
     }
   }
   /* visitor dots on the hero map */
+  /* part of the map, not on top of the page: soft, small, no outline */
+  .visitor-dots {
+    opacity: 0.75;
+  }
+  /* fade dots behind the hero text (left side) on wide screens */
+  @media (min-width: 640px) {
+    .visitor-dots {
+      -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.18) 42%, #000 62%);
+      mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.18) 42%, #000 62%);
+    }
+  }
   .visitor-dot {
-    fill: #ec4899;
-    stroke: #fff;
-    stroke-width: 0.9;
-    filter: drop-shadow(0 0 3px rgba(236, 72, 153, 0.8));
+    fill: rgba(236, 72, 153, 0.85);
   }
   .visitor-dot-pulse {
-    fill: rgba(236, 72, 153, 0.45);
+    fill: rgba(236, 72, 153, 0.3);
     transform-box: fill-box;
     transform-origin: center;
     animation: visitor-pulse 2.8s ease-out infinite;
   }
   @keyframes visitor-pulse {
-    from { transform: scale(1); opacity: 0.9; }
-    to { transform: scale(4); opacity: 0; }
+    from { transform: scale(1); opacity: 0.7; }
+    to { transform: scale(3); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     .visitor-dot-pulse { animation: none; opacity: 0; }

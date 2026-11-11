@@ -38,6 +38,23 @@ export function MapLand() {
   );
 }
 
+// Keep the hero tidy: places closer than MERGE map units (about 300 km) become
+// one dot, so nearby cities in a country (e.g. Islamabad and Lahore) share a
+// dot while far-apart ones (Karachi) keep their own; at most MAX_DOTS dots,
+// busiest first.
+const MERGE = 9;
+const MAX_DOTS = 30;
+function cluster(places) {
+  const out = [];
+  for (const p of [...places].sort((a, b) => b.count - a.count)) {
+    const [x, y] = project(p.lat, p.lon);
+    const near = out.find((c) => Math.hypot(c.x - x, c.y - y) < MERGE);
+    if (near) near.count += p.count;
+    else out.push({ x, y, count: p.count });
+  }
+  return out.slice(0, MAX_DOTS);
+}
+
 /** Visitor dots, above the split so they show on both sides. */
 export function MapDots() {
   const [places, setPlaces] = useState([]);
@@ -54,14 +71,15 @@ export function MapDots() {
   }, []);
 
   if (!places.length) return null;
-  const max = Math.max(...places.map((p) => p.count));
+  const dots = cluster(places);
+  const max = Math.max(...dots.map((p) => p.count));
   return (
     <svg className={`${layer} visitor-dots`} style={box} viewBox={VIEWBOX} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      {places.map((p, i) => {
-        const [x, y] = project(p.lat, p.lon);
-        const r = 2.2 + 3.2 * Math.sqrt(p.count / max);
+      {dots.map((p, i) => {
+        const r = 1.5 + 1.6 * Math.sqrt(p.count / max);
+        const { x, y } = p;
         return (
-          <g key={`${p.lat},${p.lon}`}>
+          <g key={`${Math.round(x)},${Math.round(y)}`}>
             <circle className="visitor-dot-pulse" cx={x} cy={y} r={r} style={{ animationDelay: `${(i % 9) * 0.35}s` }} />
             <circle className="visitor-dot" cx={x} cy={y} r={r} />
           </g>
