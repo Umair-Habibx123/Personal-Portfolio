@@ -97,10 +97,8 @@
       "items": [
         "OpenAI",
         "Google Gemini",
-        "LLM apps & agents",
-        "RAG & pgvector",
-        "Voice AI (Deepgram, ElevenLabs)",
-        "Twilio"
+        "Voice AI",
+        "RAG"
       ]
     },
     {
