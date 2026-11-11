@@ -1,4 +1,4 @@
-// "Visited from N countries": public totals from /api/analytics.
+// Top 5 visitor countries (flag, name, visits) from /api/analytics.
 // Loads only when it scrolls into view, and hides itself if there's no data.
 import { useEffect, useRef, useState } from 'react';
 import { loadStats } from '../lib/stats';
@@ -25,7 +25,7 @@ export default function Visitors() {
       ([e]) => {
         if (!e.isIntersecting) return;
         io.disconnect();
-        loadStats().then((d) => d?.visitors > 0 && setStats(d));
+        loadStats().then((d) => d?.countries?.length > 0 && setStats(d));
       },
       { rootMargin: '300px' },
     );
@@ -35,15 +35,10 @@ export default function Visitors() {
 
   return (
     <div ref={ref} className="mt-6 w-full" aria-live="polite">
-      {stats && (
+      {stats?.countries?.length > 0 && (
         <div className="border-t border-neutral-300/60 pt-5">
-          <p className="text-[13px] text-neutral-600">
-            Visited by <strong className="text-eerieBlack">{fmt(stats.visitors)}</strong> {stats.visitors === 1 ? 'person' : 'people'} from{' '}
-            <strong className="text-eerieBlack">{fmt(stats.countryCount)}</strong> {stats.countryCount === 1 ? 'country' : 'countries'}
-          </p>
-          {stats.countries.length > 0 && (
-            <ul className="mt-3 flex flex-wrap justify-center gap-2">
-              {stats.countries.map(({ key, count }) => (
+            <ul aria-label="Top visitor countries" className="flex flex-wrap justify-center gap-2">
+              {stats.countries.slice(0, 5).map(({ key, count }) => (
                 <li
                   key={key}
                   title={`${countryName(key)}: ${fmt(count)} ${count === 1 ? 'visit' : 'visits'}`}
@@ -61,7 +56,6 @@ export default function Visitors() {
                 </li>
               ))}
             </ul>
-          )}
         </div>
       )}
     </div>
